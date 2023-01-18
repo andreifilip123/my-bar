@@ -1,5 +1,7 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import type { GithubProfile } from "next-auth/providers/github";
+import GithubProvider from "next-auth/providers/github";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
@@ -17,11 +19,27 @@ export const authOptions: NextAuthOptions = {
     },
   },
   // Configure one or more authentication providers
-  adapter: PrismaAdapter(prisma),
+  adapter: {
+    ...PrismaAdapter(prisma),
+    // Remove refresh_token_expires_in from the Account model
+    linkAccount: async ({ ok, state, refresh_token_expires_in, ...data }) => {
+      await prisma.account.create({ data })
+    },
+  },
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+    }),
+    GithubProvider<GithubProfile>({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+      profile: (profile) => ({
+        id: profile.id.toString(),
+        name: profile.name,
+        email: profile.email,
+        image: profile.avatar_url,
+      }),
     }),
     /**
      * ...add more providers here
