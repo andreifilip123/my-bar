@@ -18,13 +18,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   // Configure one or more authentication providers
-  adapter: {
-    ...PrismaAdapter(prisma),
-    // Remove refresh_token_expires_in from the Account model
-    linkAccount: async ({ ok, state, refresh_token_expires_in, ...data }) => {
-      await prisma.account.create({ data })
-    },
-  },
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider<GithubProfile>({
       clientId: env.GITHUB_CLIENT_ID,
