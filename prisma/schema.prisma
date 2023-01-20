@@ -19,7 +19,7 @@ model Cocktail {
 
 model Ingredient {
     id        String     @id @default(cuid())
-    name      String
+    name      String     @unique
     createdAt DateTime   @default(now())
     updatedAt DateTime   @updatedAt
     cocktails Cocktail[]
@@ -30,16 +30,15 @@ model Ingredient {
 
 model Unit {
     id         String       @id @default(cuid())
-    name       String
+    name       String       @unique
     createdAt  DateTime     @default(now())
     updatedAt  DateTime     @updatedAt
-    unit       String
     ingredient Ingredient[]
 }
 
 model Garnish {
     id        String     @id @default(cuid())
-    name      String
+    name      String     @unique
     createdAt DateTime   @default(now())
     updatedAt DateTime   @updatedAt
     cocktails Cocktail[]
@@ -49,7 +48,7 @@ model Garnish {
 
 model Ice {
     id         String    @id @default(cuid())
-    type       String
+    type       String    @unique
     createdAt  DateTime  @default(now())
     updatedAt  DateTime  @updatedAt
     cocktail   Cocktail? @relation(fields: [cocktailId], references: [id])
