@@ -1,23 +1,59 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
 
 datasource db {
     provider = "sqlite"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Cocktail {
+    id          String       @id @default(cuid())
+    name        String
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    ingredients Ingredient[]
+    garnishes   Garnish[]
+    ice         Ice[]
+}
+
+model Ingredient {
+    id        String     @id @default(cuid())
+    name      String
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    cocktails Cocktail[]
+    amount    Int
+    unit      Unit       @relation(fields: [unitId], references: [id])
+    unitId    String
+}
+
+model Unit {
+    id         String       @id @default(cuid())
+    name       String
+    createdAt  DateTime     @default(now())
+    updatedAt  DateTime     @updatedAt
+    unit       String
+    ingredient Ingredient[]
+}
+
+model Garnish {
+    id        String     @id @default(cuid())
+    name      String
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    cocktails Cocktail[]
+    amount    Int
+    unit      String
+}
+
+model Ice {
+    id         String    @id @default(cuid())
+    type       String
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+    cocktail   Cocktail? @relation(fields: [cocktailId], references: [id])
+    cocktailId String?
 }
 
 // Necessary for Next auth
@@ -27,13 +63,13 @@ model Account {
     type                     String
     provider                 String
     providerAccountId        String
-    refresh_token            String? // @db.Text
+    refresh_token            String?
     refresh_token_expires_in Int?
-    access_token             String? // @db.Text
+    access_token             String?
     expires_at               Int?
     token_type               String?
     scope                    String?
-    id_token                 String? // @db.Text
+    id_token                 String?
     session_state            String?
     user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
