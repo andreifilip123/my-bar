@@ -4,7 +4,15 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const cocktailRouter = createTRPCRouter({
   all: publicProcedure
-    .query(({ ctx }) => ctx.prisma.cocktail.findMany()),
+    .query(({ ctx }) => ctx.prisma.cocktail.findMany({
+      include: {
+        ingredients: {
+          include: {
+            unit: true,
+          },
+        },
+      },
+    })),
 
   byName: publicProcedure
     .input(z.object({ name: z.string() }))
@@ -14,7 +22,7 @@ export const cocktailRouter = createTRPCRouter({
       },
     })),
 
-  createCocktail: protectedProcedure
+  create: protectedProcedure
     .input(z.object({
       name: z.string(),
       ingredients: z.array(z.object({
@@ -52,7 +60,7 @@ export const cocktailRouter = createTRPCRouter({
       },
     })),
 
-  deleteCocktail: protectedProcedure
+  delete: protectedProcedure
     .input(z.object({ name: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const cocktail = await ctx.prisma.cocktail.findFirstOrThrow({
