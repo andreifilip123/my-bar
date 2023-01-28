@@ -15,6 +15,7 @@ model Cocktail {
     ingredients Ingredient[]
     garnishes   Garnish[]
     ice         Ice[]
+    image       String
 }
 
 model Ingredient {
