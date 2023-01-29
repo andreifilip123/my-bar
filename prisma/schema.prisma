@@ -7,6 +7,11 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Image {
+    id       String    @id @default(cuid())
+    cocktail Cocktail?
+}
+
 model Cocktail {
     id          String       @id @default(cuid())
     name        String
@@ -15,7 +20,10 @@ model Cocktail {
     ingredients Ingredient[]
     garnishes   Garnish[]
     ice         Ice[]
-    image       String
+    image       Image        @relation(fields: [imageId], references: [id])
+    imageId     String       @unique
+    user        User?        @relation(fields: [userId], references: [id])
+    userId      String?
 }
 
 model Ingredient {
@@ -85,13 +93,14 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String     @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?    @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
+    cocktails     Cocktail[]
 }
 
 model VerificationToken {
