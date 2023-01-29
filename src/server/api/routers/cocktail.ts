@@ -29,6 +29,7 @@ export const cocktailRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
+        imageId: z.string(),
         ingredients: z.array(
           z.object({
             name: z.string(),
@@ -44,6 +45,11 @@ export const cocktailRouter = createTRPCRouter({
       ctx.prisma.cocktail.create({
         data: {
           name: input.name,
+          image: {
+            connect: {
+              id: input.imageId,
+            },
+          },
           ingredients: {
             connectOrCreate: input.ingredients.map((ingredient) => ({
               where: {
