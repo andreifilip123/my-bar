@@ -10,6 +10,8 @@ datasource db {
 model Image {
     id       String    @id @default(cuid())
     cocktail Cocktail?
+    user     User?     @relation(fields: [userId], references: [id])
+    userId   String?
 }
 
 model Cocktail {
@@ -20,7 +22,7 @@ model Cocktail {
     ingredients Ingredient[]
     garnishes   Garnish[]
     ice         Ice[]
-    image       Image        @relation(fields: [imageId], references: [id])
+    image       Image?       @relation(fields: [imageId], references: [id])
     imageId     String       @unique
     user        User?        @relation(fields: [userId], references: [id])
     userId      String?
@@ -93,14 +95,15 @@ model Session {
 }
 
 model User {
-    id            String     @id @default(cuid())
-    name          String?
-    email         String?    @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    cocktails     Cocktail[]
+    id             String     @id @default(cuid())
+    name           String?
+    email          String?    @unique
+    emailVerified  DateTime?
+    image          String?
+    accounts       Account[]
+    sessions       Session[]
+    cocktails      Cocktail[]
+    uploadedImages Image[]
 }
 
 model VerificationToken {
