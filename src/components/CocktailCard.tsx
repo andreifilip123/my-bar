@@ -3,6 +3,10 @@ import type { Prisma } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 
+type Ingredient = Prisma.IngredientGetPayload<{
+  include: { unit: true };
+}>;
+
 type CocktailWithIngredients = Prisma.CocktailGetPayload<{
   include: {
     ingredients: {
@@ -39,6 +43,9 @@ const CocktailCard = (cocktail: CocktailWithIngredients) => {
     clearTimeout(timeoutId);
     setShowDetails(false);
   };
+
+  const ingredientMapper = (ingredient: Ingredient) =>
+    `${ingredient.amount} ${ingredient.unit.name} of ${ingredient.name}`;
 
   return (
     <AspectRatio
@@ -78,12 +85,7 @@ const CocktailCard = (cocktail: CocktailWithIngredients) => {
 
             {showDetails && (
               <Box fontWeight="bold" color="white">
-                {cocktail.ingredients
-                  .map(
-                    (ingredient) =>
-                      `${ingredient.amount} ${ingredient.unit.name} of ${ingredient.name}`,
-                  )
-                  .join(", ")}
+                {cocktail.ingredients.map(ingredientMapper).join(", ")}
               </Box>
             )}
           </Flex>
