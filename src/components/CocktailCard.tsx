@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Image } from "@chakra-ui/react";
+import { AspectRatio, Flex, Image, Text } from "@chakra-ui/react";
 import type { Cocktail } from "@prisma/client";
 import { api } from "../utils/api";
 
@@ -9,14 +9,31 @@ const CocktailCard = (cocktail: Cocktail) => {
   );
 
   return (
-    <Card maxW={300} key={cocktail.id}>
-      <CardBody>
-        <Image src={imageUrl} alt={cocktail.name} />
-      </CardBody>
-      <CardFooter>
-        <h1>{cocktail.name}</h1>
-      </CardFooter>
-    </Card>
+    <AspectRatio
+      maxW={300}
+      ratio={14 / 16}
+      width="100%"
+      position="relative"
+      margin={3}
+    >
+      <>
+        <Image src={imageUrl} alt={cocktail.name} borderRadius={20} />
+        <Flex
+          justifyContent="center"
+          position="absolute"
+          top="0"
+          bottom="0"
+          left="0"
+          right="0"
+          borderRadius={20}
+          bgGradient="linear(to-br, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))"
+        >
+          <Text pb="5" fontWeight="bold" color="white" alignSelf="flex-end">
+            {cocktail.name}
+          </Text>
+        </Flex>
+      </>
+    </AspectRatio>
   );
 };
 
