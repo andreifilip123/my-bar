@@ -7,7 +7,9 @@ const Cocktails = () => {
 
   return (
     <HStack>
-      {cocktails.data?.map(cocktail => <CocktailCard key={cocktail.id} {...cocktail} />)}
+      {cocktails.data?.map((cocktail) => (
+        <CocktailCard key={cocktail.id} {...cocktail} />
+      ))}
     </HStack>
   );
 };

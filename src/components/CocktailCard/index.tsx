@@ -1,7 +1,9 @@
 import { AspectRatio, Box, Flex, Image } from "@chakra-ui/react";
 import type { Prisma } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { api } from "../utils/api";
+import { api } from "../../utils/api";
+
+import styles from "./CocktailCard.module.css";
 
 type Ingredient = Prisma.IngredientGetPayload<{
   include: { unit: true };
@@ -20,7 +22,7 @@ const CocktailCard = (cocktail: CocktailWithIngredients) => {
     { imageKey: cocktail.imageId },
     {},
   );
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState<boolean>();
   const [isHovering, setIsHovering] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
@@ -41,7 +43,6 @@ const CocktailCard = (cocktail: CocktailWithIngredients) => {
   const handleMouseLeave = () => {
     setIsHovering(false);
     clearTimeout(timeoutId);
-    setShowDetails(false);
   };
 
   const ingredientMapper = (ingredient: Ingredient) =>
@@ -78,16 +79,35 @@ const CocktailCard = (cocktail: CocktailWithIngredients) => {
           borderRadius={20}
           bgGradient="linear(to-br, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))"
         >
-          <Flex direction="column" alignItems="center" pb={5}>
+          <Flex
+            direction="column"
+            alignItems="center"
+            pb={5}
+            className={
+              showDetails === undefined
+                ? "translate-y-1/2"
+                : showDetails
+                ? styles["content-active"]
+                : styles["content-inactive"]
+            }
+          >
             <Box fontWeight="bold" color="white">
               {cocktail.name}
             </Box>
 
-            {showDetails && (
-              <Box fontWeight="bold" color="white">
-                {cocktail.ingredients.map(ingredientMapper).join(", ")}
-              </Box>
-            )}
+            <Box
+              fontWeight="bold"
+              color="white"
+              className={
+                showDetails === undefined
+                  ? "opacity-0"
+                  : showDetails
+                  ? styles["details-active"]
+                  : styles["details-inactive"]
+              }
+            >
+              {cocktail.ingredients.map(ingredientMapper).join(", ")}
+            </Box>
           </Flex>
         </Flex>
       </>
