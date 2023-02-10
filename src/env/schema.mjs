@@ -22,10 +22,10 @@ export const serverSchema = z.object({
   ),
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
-  AWS_BUCKET_NAME: z.string(),
-  AWS_REGION: z.string(),
-  AWS_ACCESS_KEY: z.string(),
-  AWS_SECRET_ACCESS_KEY: z.string(),
+  BUCKET_NAME: z.string(),
+  REGION: z.string(),
+  ACCESS_KEY: z.string(),
+  SECRET_ACCESS_KEY: z.string(),
 });
 
 /**
@@ -41,10 +41,10 @@ export const serverEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-  AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
-  AWS_REGION: process.env.AWS_REGION,
-  AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY,
-  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+  BUCKET_NAME: process.env.AWS_BUCKET_NAME,
+  REGION: process.env.AWS_REGION,
+  ACCESS_KEY: process.env.AWS_ACCESS_KEY,
+  SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
 };
 
 /**

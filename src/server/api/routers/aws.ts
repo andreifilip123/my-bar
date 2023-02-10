@@ -6,8 +6,8 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 const s3 = new S3({
   apiVersion: "2006-03-01",
-  accessKeyId: serverEnv.AWS_ACCESS_KEY,
-  secretAccessKey: serverEnv.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: serverEnv.ACCESS_KEY,
+  secretAccessKey: serverEnv.SECRET_ACCESS_KEY,
 });
 
 export const awsRouter = createTRPCRouter({
@@ -41,7 +41,7 @@ export const awsRouter = createTRPCRouter({
               ["starts-with", "$Content-Type", "image/"],
             ],
             Expires: 60, // seconds
-            Bucket: serverEnv.AWS_BUCKET_NAME,
+            Bucket: serverEnv.BUCKET_NAME,
           },
           (err, signed) => {
             if (err) return reject(err);
@@ -58,10 +58,10 @@ export const awsRouter = createTRPCRouter({
 
       const userId = ctx.session.user.id;
 
-      if (!serverEnv.AWS_BUCKET_NAME) throw new Error("No bucket name set");
+      if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
 
       const url = s3.getSignedUrl("getObject", {
-        Bucket: serverEnv.AWS_BUCKET_NAME,
+        Bucket: serverEnv.BUCKET_NAME,
         Key: `${userId}/${input.imageKey}`,
         Expires: 60 * 15, // 15 minutes
       });
@@ -72,11 +72,11 @@ export const awsRouter = createTRPCRouter({
   deleteFromS3: protectedProcedure
     .input(z.object({ key: z.string() }))
     .mutation(({ input }) => {
-      if (!serverEnv.AWS_BUCKET_NAME) throw new Error("No bucket name set");
+      if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
 
       const deletePromise = s3
         .deleteObject({
-          Bucket: serverEnv.AWS_BUCKET_NAME,
+          Bucket: serverEnv.BUCKET_NAME,
           Key: input.key,
         })
         .promise();
