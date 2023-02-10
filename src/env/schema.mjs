@@ -41,10 +41,10 @@ export const serverEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-  BUCKET_NAME: process.env.AWS_BUCKET_NAME,
-  REGION: process.env.AWS_REGION,
-  ACCESS_KEY: process.env.AWS_ACCESS_KEY,
-  SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+  BUCKET_NAME: process.env.BUCKET_NAME,
+  REGION: process.env.REGION,
+  ACCESS_KEY: process.env.ACCESS_KEY,
+  SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
 };
 
 /**
