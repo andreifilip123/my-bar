@@ -33,7 +33,7 @@ export const awsRouter = createTRPCRouter({
         s3.createPresignedPost(
           {
             Fields: {
-              key: `${userId}/${image.id}`,
+              key: image.id,
               "Content-Type": input.fileType,
             },
             Conditions: [
@@ -53,16 +53,12 @@ export const awsRouter = createTRPCRouter({
 
   getSignedUrl: protectedProcedure
     .input(z.object({ imageKey: z.string() }))
-    .query(({ input, ctx }) => {
-      if (!ctx.session) throw new Error("Not authenticated");
-
-      const userId = ctx.session.user.id;
-
+    .query(({ input }) => {
       if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
 
       const url = s3.getSignedUrl("getObject", {
         Bucket: serverEnv.BUCKET_NAME,
-        Key: `${userId}/${input.imageKey}`,
+        Key: input.imageKey,
         Expires: 60 * 15, // 15 minutes
       });
 
