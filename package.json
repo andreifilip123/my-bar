@@ -22,7 +22,7 @@
     "@trpc/react-query": "^10.9.1",
     "@trpc/server": "^10.9.1",
     "aws-sdk": "^2.1305.0",
-    "framer-motion": "^8.5.5",
+    "framer-motion": "^9.0.4",
     "json5": "^2.2.3",
     "next": "13.1.6",
     "next-auth": "^4.19.0",
