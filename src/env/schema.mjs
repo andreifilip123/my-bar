@@ -25,6 +25,7 @@ export const serverSchema = z.object({
   REGION: z.string(),
   ACCESS_KEY: z.string(),
   SECRET_ACCESS_KEY: z.string(),
+  OPENAI_API_KEY: z.string(),
 });
 
 /**
@@ -43,6 +44,7 @@ export const serverEnv = {
   REGION: process.env.REGION,
   ACCESS_KEY: process.env.ACCESS_KEY,
   SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 };
 
 /**

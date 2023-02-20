@@ -1,6 +1,7 @@
 import { awsRouter } from "./routers/aws";
 import { cocktailRouter } from "./routers/cocktail";
 import { exampleRouter } from "./routers/example";
+import { robotRouter } from "./routers/robot";
 import { createTRPCRouter } from "./trpc";
 
 /**
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
   example: exampleRouter,
   cocktail: cocktailRouter,
   aws: awsRouter,
+  robot: robotRouter,
 });
 
 // export type definition of API
