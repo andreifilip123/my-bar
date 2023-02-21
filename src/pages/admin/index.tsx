@@ -116,11 +116,11 @@ const Admin: NextPage = () => {
           imageId,
           ingredients: data.ingredients.map((ingredient) => ({
             amount: ingredient.amount,
-            unit: {
-              name: ingredient.unit,
-            },
-            name: ingredient.name,
+            unit: ingredient.unit,
+            ingredient: ingredient.name,
           })),
+          garnishes: [],
+          ice: { type: "none" },
         },
         {
           onSuccess: async () => {
