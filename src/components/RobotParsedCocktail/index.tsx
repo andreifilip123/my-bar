@@ -1,8 +1,9 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
-  CardHeader,
+  CardFooter,
   Heading,
   ListItem,
   Stack,
@@ -11,15 +12,14 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import type { FC } from "react";
-import type { ParsedCocktailRecipe } from "../../pages/admin/robot";
+import type { ParsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
 
-const index: FC<{ recipe: ParsedCocktailRecipe }> = ({ recipe }) => {
+const index: FC<{ recipe: ParsedCocktailRecipe; onSelect?: () => void }> = ({
+  recipe,
+  onSelect,
+}) => {
   return (
-    <Card>
-      <CardHeader>
-        <Heading size="md">{recipe.name}</Heading>
-      </CardHeader>
-
+    <Card width={350} maxW="100%">
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
           <Box>
@@ -56,6 +56,19 @@ const index: FC<{ recipe: ParsedCocktailRecipe }> = ({ recipe }) => {
           </Box>
         </Stack>
       </CardBody>
+      {onSelect && (
+        <CardFooter>
+          <Button
+            mt="4"
+            width="100%"
+            bgColor="green.500"
+            color="white"
+            onClick={onSelect}
+          >
+            Select
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };

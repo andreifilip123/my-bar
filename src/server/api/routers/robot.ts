@@ -11,6 +11,27 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export const robotRouter = createTRPCRouter({
+  isAlive: publicProcedure.query(async () => {
+    try {
+      const completion = await openai.createCompletion({
+        max_tokens: 100,
+        prompt: "Hello world",
+        model: "text-davinci-003",
+        temperature: 0.5,
+      });
+
+      return !!completion.data.choices[0]?.text;
+    } catch (error: any) {
+      if (error.response) {
+        console.log(error.response.status);
+        console.log(error.response.data);
+      } else {
+        console.log(error.message);
+      }
+
+      return false;
+    }
+  }),
   getCocktailRecipe: publicProcedure
     .input(z.object({ cocktailName: z.string() }))
     .mutation(async ({ input }) => {
@@ -46,7 +67,10 @@ export const robotRouter = createTRPCRouter({
           temperature: 0.5,
         });
 
-        if (!completion.data.choices[0]?.text) return "";
+        if (!completion.data.choices[0]?.text) {
+          console.log("No completion found", completion.data);
+          return "";
+        }
 
         return completion.data.choices[0].text;
       } catch (error: any) {

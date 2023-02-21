@@ -1,59 +1,85 @@
-import { Box, Center, Flex, Heading, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  FormLabel,
+  Heading,
+  HStack,
+  Input,
+} from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import JSON5 from "json5";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import z from "zod";
 import RobotParsedCocktail from "../../components/RobotParsedCocktail";
+import type { ParsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
+import { parsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
 
 import { api } from "../../utils/api";
 
-const parsedCocktailRecipe = z.object({
-  name: z.string(),
-  ingredients: z.array(
-    z.object({
-      amount: z.number(),
-      unit: z.string(),
-      ingredient: z.string(),
-    }),
-  ),
-  garnishes: z.array(
-    z.object({
-      amount: z.number(),
-      unit: z.string(),
-      ingredient: z.string(),
-    }),
-  ),
-  ice: z.object({ type: z.string() }),
+const formSchema = z.object({
+  cocktailName: z.string(),
+  numberOfVariants: z.number(),
 });
 
-export type ParsedCocktailRecipe = z.infer<typeof parsedCocktailRecipe>;
+type IFormInputs = z.infer<typeof formSchema>;
 
 const Robot: NextPage = () => {
-  const [cocktailName, setCocktailName] = useState("");
+  const { data: robotIsAlive } = api.robot.isAlive.useQuery();
   const getCocktailRecipe = api.robot.getCocktailRecipe.useMutation();
 
   const [results, setResults] = useState<ParsedCocktailRecipe[]>([]);
+  const [selectedResult, setSelectedResult] = useState<ParsedCocktailRecipe>();
 
-  const getTopThreeCocktails = async () => {
-    const versions = await Promise.all([
-      getCocktailRecipe.mutateAsync({ cocktailName }),
-      getCocktailRecipe.mutateAsync({ cocktailName }),
-      getCocktailRecipe.mutateAsync({ cocktailName }),
-    ]);
+  const { register, handleSubmit } = useForm<IFormInputs>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      numberOfVariants: 3,
+    },
+  });
 
-    try {
-      const parsedVersions = versions.map((version) =>
-        parsedCocktailRecipe.parse(JSON5.parse(version)),
-      );
+  const onSubmit = async (data: IFormInputs) => {
+    const versions = await Promise.all(
+      Array.from({ length: data.numberOfVariants }, () =>
+        getCocktailRecipe.mutateAsync({ cocktailName: data.cocktailName }),
+      ),
+    );
 
-      setResults(parsedVersions);
-    } catch (error) {
-      console.log(error);
+    const parsedVersions = versions
+      .filter((version) => {
+        try {
+          return parsedCocktailRecipe.parse(JSON5.parse(version));
+        } catch (error) {
+          console.log(version);
+          console.log(error);
+        }
+      })
+      .map((version) => parsedCocktailRecipe.parse(JSON5.parse(version)));
 
-      setResults([]);
-    }
+    setResults(parsedVersions);
   };
+
+  const createCocktailMutation = api.cocktail.create.useMutation();
+
+  const createCocktail = async (recipe: ParsedCocktailRecipe) => {
+    await createCocktailMutation.mutateAsync({
+      ...recipe,
+      imageId: "cocktail-1",
+    });
+  };
+
+  if (!robotIsAlive)
+    return (
+      <Center minH="100vh">
+        <Heading>
+          Currently, the <Link href="ai.com">🤖</Link> is not available
+        </Heading>
+      </Center>
+    );
 
   return (
     <Center flexDir="column" minH="100vh">
@@ -62,21 +88,41 @@ const Robot: NextPage = () => {
       </Heading>
 
       <Box>
-        <Input
-          placeholder="Cocktail name"
-          onChange={(e) => setCocktailName(e.target.value)}
-          value={cocktailName}
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <HStack>
+            <Input placeholder="Cocktail name" {...register("cocktailName")} />
 
-        <Input type="submit" onClick={() => getTopThreeCocktails()} />
+            <FormLabel flexBasis={250}>Number of variants:</FormLabel>
+            <Input
+              placeholder="Number of variants"
+              type="number"
+              flexBasis={50}
+              {...register("numberOfVariants", { valueAsNumber: true })}
+            />
+          </HStack>
+
+          <Input type="submit" />
+        </form>
       </Box>
 
-      {results.length ? (
-        <Flex gap="4" mt={10}>
+      {results.length && !selectedResult ? (
+        <Flex gap="4" mt={10} flexWrap="wrap">
           {results.map((result, index) => (
-            <RobotParsedCocktail key={index} recipe={result} />
+            <RobotParsedCocktail
+              key={index}
+              recipe={result}
+              onSelect={() => setSelectedResult(result)}
+            />
           ))}
         </Flex>
+      ) : null}
+
+      {selectedResult ? (
+        <>
+          <RobotParsedCocktail recipe={selectedResult} />
+          <Button onClick={() => setSelectedResult(undefined)}>Back</Button>
+          <Button onClick={() => createCocktail(selectedResult)}>Save</Button>
+        </>
       ) : null}
     </Center>
   );
