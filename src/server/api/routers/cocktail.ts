@@ -1,4 +1,5 @@
 import z from "zod";
+import { parsedCocktailRecipe } from "../../../types/ParsedCocktailRecipe";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -27,22 +28,58 @@ export const cocktailRouter = createTRPCRouter({
 
   create: protectedProcedure
     .input(
-      z.object({
-        name: z.string(),
-        imageId: z.string(),
-        ingredients: z.array(
-          z.object({
-            name: z.string(),
-            amount: z.number(),
-            unit: z.object({
-              name: z.string(),
-            }),
-          }),
-        ),
-      }),
+      parsedCocktailRecipe // zod schema
+        .extend({
+          imageId: z.string(),
+        }),
     )
-    .mutation(({ ctx, input }) =>
-      ctx.prisma.cocktail.create({
+    .mutation(async ({ ctx, input }) => {
+      // create units
+      await Promise.all(
+        input.ingredients.map(async (ingredient) => {
+          await ctx.prisma.unit.create({
+            data: {
+              name: ingredient.unit,
+            },
+          });
+        }),
+      );
+      // create ingredients
+      await Promise.all(
+        input.ingredients.map(async (ingredient) => {
+          await ctx.prisma.ingredient.create({
+            data: {
+              name: ingredient.ingredient,
+              amount: ingredient.amount,
+              unit: {
+                connect: {
+                  name: ingredient.unit,
+                },
+              },
+            },
+          });
+        }),
+      );
+      // create garnishes
+      await Promise.all(
+        input.garnishes.map(async (garnish) => {
+          await ctx.prisma.garnish.create({
+            data: {
+              name: garnish.ingredient,
+              amount: garnish.amount,
+              unit: garnish.unit,
+            },
+          });
+        }),
+      );
+      // create ice
+      await ctx.prisma.ice.create({
+        data: {
+          type: input.ice.type,
+        },
+      });
+      // create cocktail
+      await ctx.prisma.cocktail.create({
         data: {
           name: input.name,
           image: {
@@ -51,29 +88,23 @@ export const cocktailRouter = createTRPCRouter({
             },
           },
           ingredients: {
-            connectOrCreate: input.ingredients.map((ingredient) => ({
-              where: {
-                name: ingredient.name,
-              },
-              create: {
-                name: ingredient.name,
-                amount: ingredient.amount,
-                unit: {
-                  connectOrCreate: {
-                    where: {
-                      name: ingredient.unit.name,
-                    },
-                    create: {
-                      name: ingredient.unit.name,
-                    },
-                  },
-                },
-              },
+            connect: input.ingredients.map((ingredient) => ({
+              name: ingredient.ingredient,
             })),
           },
+          garnishes: {
+            connect: input.garnishes.map((garnish) => ({
+              name: garnish.ingredient,
+            })),
+          },
+          ice: {
+            connect: {
+              type: input.ice.type,
+            },
+          },
         },
-      }),
-    ),
+      });
+    }),
 
   delete: protectedProcedure
     .input(z.object({ name: z.string() }))
