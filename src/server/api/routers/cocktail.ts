@@ -34,21 +34,28 @@ export const cocktailRouter = createTRPCRouter({
         }),
     )
     .mutation(async ({ ctx, input }) => {
-      // create units
+      // create units if they don't exist
       await Promise.all(
         input.ingredients.map(async (ingredient) => {
-          await ctx.prisma.unit.create({
-            data: {
+          await ctx.prisma.unit.upsert({
+            where: {
               name: ingredient.unit,
             },
+            create: {
+              name: ingredient.unit,
+            },
+            update: {},
           });
         }),
       );
       // create ingredients
       await Promise.all(
         input.ingredients.map(async (ingredient) => {
-          await ctx.prisma.ingredient.create({
-            data: {
+          await ctx.prisma.ingredient.upsert({
+            where: {
+              name: ingredient.ingredient,
+            },
+            create: {
               name: ingredient.ingredient,
               amount: ingredient.amount,
               unit: {
@@ -57,26 +64,35 @@ export const cocktailRouter = createTRPCRouter({
                 },
               },
             },
+            update: {},
           });
         }),
       );
       // create garnishes
       await Promise.all(
         input.garnishes.map(async (garnish) => {
-          await ctx.prisma.garnish.create({
-            data: {
+          await ctx.prisma.garnish.upsert({
+            where: {
+              name: garnish.ingredient,
+            },
+            create: {
               name: garnish.ingredient,
               amount: garnish.amount,
               unit: garnish.unit,
             },
+            update: {},
           });
         }),
       );
       // create ice
-      await ctx.prisma.ice.create({
-        data: {
+      await ctx.prisma.ice.upsert({
+        where: {
           type: input.ice.type,
         },
+        create: {
+          type: input.ice.type,
+        },
+        update: {},
       });
       // create cocktail
       await ctx.prisma.cocktail.create({
