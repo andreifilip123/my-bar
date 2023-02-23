@@ -7,11 +7,12 @@ import {
   Heading,
   HStack,
   Input,
+  Link,
+  Progress,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import JSON5 from "json5";
 import type { NextPage } from "next";
-import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -29,7 +30,7 @@ const formSchema = z.object({
 type IFormInputs = z.infer<typeof formSchema>;
 
 const Robot: NextPage = () => {
-  const { data: robotIsAlive } = api.robot.isAlive.useQuery();
+  const { data: robotIsAlive, isLoading } = api.robot.isAlive.useQuery();
   const getCocktailRecipe = api.robot.getCocktailRecipe.useMutation();
 
   const [results, setResults] = useState<ParsedCocktailRecipe[]>([]);
@@ -71,6 +72,14 @@ const Robot: NextPage = () => {
       imageId: "cocktail-1",
     });
   };
+
+  if (isLoading)
+    return (
+      <Center minH="100vh" flexDir="column">
+        <Progress size="lg" isIndeterminate width="30%" borderRadius="10" />
+        <Heading>Loading...</Heading>
+      </Center>
+    );
 
   if (!robotIsAlive)
     return (
