@@ -8,6 +8,7 @@ const s3 = new S3({
   apiVersion: "2006-03-01",
   accessKeyId: serverEnv.ACCESS_KEY,
   secretAccessKey: serverEnv.SECRET_ACCESS_KEY,
+  region: serverEnv.REGION,
 });
 
 export const awsRouter = createTRPCRouter({

@@ -28,7 +28,7 @@ const formSchema = z.object({
 type IFormInputs = z.infer<typeof formSchema>;
 
 const Robot: NextPage = () => {
-  const { setCurrentStep } = useRobotContext();
+  const { setCurrentStep, setCocktailRecipe } = useRobotContext();
   const getCocktailRecipe = api.robot.getCocktailRecipe.useMutation();
 
   const [results, setResults] = useState<ParsedCocktailRecipe[]>([]);
@@ -100,7 +100,12 @@ const Robot: NextPage = () => {
           <RobotParsedCocktail recipe={selectedResult} />
           <Flex gap={5} margin={5}>
             <Button onClick={() => setSelectedResult(undefined)}>Back</Button>
-            <Button onClick={() => setCurrentStep("uploadImage")}>
+            <Button
+              onClick={() => {
+                setCocktailRecipe(selectedResult);
+                setCurrentStep("uploadImage");
+              }}
+            >
               Next step
             </Button>
           </Flex>

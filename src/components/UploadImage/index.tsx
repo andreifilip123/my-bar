@@ -32,7 +32,7 @@ type IFormInputs = {
 };
 
 const Admin: NextPage = () => {
-  const { setImage } = useRobotContext();
+  const { setImage, setCurrentStep } = useRobotContext();
 
   const createPresignedUrl = api.aws.createPresignedUrl.useMutation();
 
@@ -51,7 +51,6 @@ const Admin: NextPage = () => {
       const { url, fields } = presigned;
 
       const imageKey = fields.key as string;
-      const imageId = imageKey.split("/")[1] as string;
 
       const formData = new FormData();
 
@@ -66,7 +65,8 @@ const Admin: NextPage = () => {
         body: formData,
       });
 
-      setImage(imageId);
+      setImage(imageKey);
+      setCurrentStep("submitCocktail");
     } catch (e) {
       console.log(e);
     }
