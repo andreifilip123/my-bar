@@ -78,6 +78,12 @@ export const cocktailRouter = createTRPCRouter({
           type: input.ice.type,
         },
       });
+      // create image
+      await ctx.prisma.image.create({
+        data: {
+          id: input.imageId,
+        },
+      });
       // create cocktail
       await ctx.prisma.cocktail.create({
         data: {

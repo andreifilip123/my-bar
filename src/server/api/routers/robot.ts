@@ -21,10 +21,10 @@ export const robotRouter = createTRPCRouter({
       });
 
       return !!completion.data.choices[0]?.text;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.response) {
-        console.log(error.response.status);
-        console.log(error.response.data);
+        console.log(error.response.status, error.response.data);
       } else {
         console.log(error.message);
       }
@@ -73,10 +73,10 @@ export const robotRouter = createTRPCRouter({
         }
 
         return completion.data.choices[0].text;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         if (error.response) {
-          console.log(error.response.status);
-          console.log(error.response.data);
+          console.log(error.response.status, error.response.data);
         } else {
           console.log(error.message);
         }

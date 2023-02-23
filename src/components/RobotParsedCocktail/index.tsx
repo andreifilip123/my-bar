@@ -5,6 +5,7 @@ import {
   CardBody,
   CardFooter,
   Heading,
+  Image,
   ListItem,
   Stack,
   StackDivider,
@@ -13,13 +14,25 @@ import {
 } from "@chakra-ui/react";
 import type { FC } from "react";
 import type { ParsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
+import { api } from "../../utils/api";
 
-const index: FC<{ recipe: ParsedCocktailRecipe; onSelect?: () => void }> = ({
-  recipe,
-  onSelect,
-}) => {
+const index: FC<{
+  recipe: ParsedCocktailRecipe;
+  onSelect?: () => void;
+  image?: string;
+}> = ({ recipe, onSelect, image }) => {
+  const { data: imageUrl } = api.aws.getSignedUrl.useQuery(
+    { imageKey: image ?? "" },
+    {
+      enabled: !!image,
+    },
+  );
+
   return (
     <Card width={350} maxW="100%">
+      {image && imageUrl && (
+        <Image src={imageUrl} alt={`Image of ${recipe.name}`} />
+      )}
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
           <Box>

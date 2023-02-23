@@ -4,11 +4,8 @@ import {
   Center,
   Flex,
   FormLabel,
-  Heading,
   HStack,
   Input,
-  Link,
-  Progress,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import JSON5 from "json5";
@@ -17,6 +14,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import RobotParsedCocktail from "../../components/RobotParsedCocktail";
+import { useRobotContext } from "../../contexts/useRobotContext";
 import type { ParsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
 import { parsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
 
@@ -30,7 +28,7 @@ const formSchema = z.object({
 type IFormInputs = z.infer<typeof formSchema>;
 
 const Robot: NextPage = () => {
-  const { data: robotIsAlive, isLoading } = api.robot.isAlive.useQuery();
+  const { setCurrentStep } = useRobotContext();
   const getCocktailRecipe = api.robot.getCocktailRecipe.useMutation();
 
   const [results, setResults] = useState<ParsedCocktailRecipe[]>([]);
@@ -53,6 +51,7 @@ const Robot: NextPage = () => {
     const parsedVersions = versions
       .filter((version) => {
         try {
+          if (!version) return false;
           return parsedCocktailRecipe.parse(JSON5.parse(version));
         } catch (error) {
           console.log(version);
@@ -64,39 +63,9 @@ const Robot: NextPage = () => {
     setResults(parsedVersions);
   };
 
-  const createCocktailMutation = api.cocktail.create.useMutation();
-
-  const createCocktail = async (recipe: ParsedCocktailRecipe) => {
-    await createCocktailMutation.mutateAsync({
-      ...recipe,
-      imageId: "cocktail-1",
-    });
-  };
-
-  if (isLoading)
-    return (
-      <Center minH="100vh" flexDir="column">
-        <Progress size="lg" isIndeterminate width="30%" borderRadius="10" />
-        <Heading>Loading...</Heading>
-      </Center>
-    );
-
-  if (!robotIsAlive)
-    return (
-      <Center minH="100vh">
-        <Heading>
-          Currently, the <Link href="ai.com">🤖</Link> is not available
-        </Heading>
-      </Center>
-    );
-
   return (
-    <Center flexDir="column" minH="100vh">
-      <Heading as="h1">
-        Create a cocktail with the help of the <Link href="ai.com">🤖</Link>
-      </Heading>
-
-      <Box>
+    <Center flexDir="column">
+      <Box margin={5}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <HStack>
             <Input placeholder="Cocktail name" {...register("cocktailName")} />
@@ -129,8 +98,12 @@ const Robot: NextPage = () => {
       {selectedResult ? (
         <>
           <RobotParsedCocktail recipe={selectedResult} />
-          <Button onClick={() => setSelectedResult(undefined)}>Back</Button>
-          <Button onClick={() => createCocktail(selectedResult)}>Save</Button>
+          <Flex gap={5} margin={5}>
+            <Button onClick={() => setSelectedResult(undefined)}>Back</Button>
+            <Button onClick={() => setCurrentStep("uploadImage")}>
+              Next step
+            </Button>
+          </Flex>
         </>
       ) : null}
     </Center>
