@@ -7,6 +7,7 @@ import GithubProvider from "next-auth/providers/github";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db";
+import sendVerificationRequest from "./sendVerificationRequest";
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -36,6 +37,7 @@ export const authOptions: NextAuthOptions = {
     EmailProvider({
       server: env.EMAIL_SERVER,
       from: env.EMAIL_FROM,
+      sendVerificationRequest,
     }),
   ],
 };
