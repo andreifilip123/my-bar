@@ -26,6 +26,8 @@ export const serverSchema = z.object({
   ACCESS_KEY: z.string(),
   SECRET_ACCESS_KEY: z.string(),
   OPENAI_API_KEY: z.string(),
+  EMAIL_SERVER: z.string(),
+  EMAIL_FROM: z.string(),
 });
 
 /**
@@ -45,6 +47,8 @@ export const serverEnv = {
   ACCESS_KEY: process.env.ACCESS_KEY,
   SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  EMAIL_SERVER: process.env.EMAIL_SERVER,
+  EMAIL_FROM: process.env.EMAIL_FROM,
 };
 
 /**
