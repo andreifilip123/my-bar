@@ -1,6 +1,7 @@
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { type NextAuthOptions } from "next-auth";
+import EmailProvider from "next-auth/providers/email";
 import type { GithubProfile } from "next-auth/providers/github";
 import GithubProvider from "next-auth/providers/github";
 
@@ -31,6 +32,10 @@ export const authOptions: NextAuthOptions = {
         email: profile.email,
         image: profile.avatar_url,
       }),
+    }),
+    EmailProvider({
+      server: env.EMAIL_SERVER,
+      from: env.EMAIL_FROM,
     }),
   ],
 };
