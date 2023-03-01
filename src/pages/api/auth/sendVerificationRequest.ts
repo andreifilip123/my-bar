@@ -37,7 +37,7 @@ function html(params: { url: string; email: string; title: string }) {
     buttonBackground: "#000000",
     buttonText: "#ffffff",
     border: "#eaeaea",
-    footnote: "#eaeaea",
+    footnote: "#8b949e",
   };
 
   return `
