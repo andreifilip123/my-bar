@@ -95,7 +95,6 @@ const Admin: NextPage = () => {
       const { url, fields } = presigned;
 
       const imageKey = fields.key as string;
-      const imageId = imageKey.split("/")[1] as string;
 
       const formData = new FormData();
 
@@ -113,7 +112,7 @@ const Admin: NextPage = () => {
       await createCocktail.mutateAsync(
         {
           name: data.name,
-          imageId,
+          imageId: imageKey,
           ingredients: data.ingredients.map((ingredient) => ({
             amount: ingredient.amount,
             unit: ingredient.unit,
