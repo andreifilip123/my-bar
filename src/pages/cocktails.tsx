@@ -6,7 +6,7 @@ const Cocktails = () => {
   const cocktails = api.cocktail.all.useQuery(undefined, {});
 
   return (
-    <HStack>
+    <HStack flexWrap="wrap" justifyContent="center">
       {cocktails.data?.map((cocktail) => (
         <CocktailCard key={cocktail.id} {...cocktail} />
       ))}
