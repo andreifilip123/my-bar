@@ -2,7 +2,7 @@ import S3 from "aws-sdk/clients/s3";
 import { z } from "zod";
 
 import { serverEnv } from "../../../env/schema.mjs";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 const s3 = new S3({
   apiVersion: "2006-03-01",
@@ -52,7 +52,7 @@ export const awsRouter = createTRPCRouter({
       });
     }),
 
-  getSignedUrl: protectedProcedure
+  getSignedUrl: publicProcedure
     .input(z.object({ imageKey: z.string() }))
     .query(({ input }) => {
       if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
