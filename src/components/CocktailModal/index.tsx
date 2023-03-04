@@ -27,7 +27,12 @@ const CocktailModal: FC<Props> = ({ isOpen, onClose, cocktail, imageUrl }) => {
     `${ingredient.amount} ${ingredient.unit.name} of ${ingredient.name}`;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size={{ base: "full", md: "xl" }}
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent borderRadius={10}>
         <ModalCloseButton />
