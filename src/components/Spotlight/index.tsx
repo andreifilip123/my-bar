@@ -9,23 +9,18 @@ import spotlightOn from "./on.png";
 
 interface Props {
   state: "on" | "off";
-  angle: number;
-  extraStyles?: React.CSSProperties;
 }
 
-const Spotlight: FC<Props> = ({ state, angle, extraStyles }) => {
+const Spotlight: FC<Props> = ({ state }) => {
   return (
-    <Box style={extraStyles}>
-      <Box position="relative">
-        <Box
-          className={state === "off" ? styles.spotlightOff : styles.spotlightOn}
-          style={{ transform: `rotate(${angle}deg)` }}
-        >
-          <Image
-            src={state === "off" ? spotlightOff : spotlightOn}
-            alt="Spotlight"
-          />
-        </Box>
+    <Box position="relative">
+      <Box
+        className={state === "off" ? styles.spotlightOff : styles.spotlightOn}
+      >
+        <Image
+          src={state === "off" ? spotlightOff : spotlightOn}
+          alt="Spotlight"
+        />
       </Box>
     </Box>
   );
