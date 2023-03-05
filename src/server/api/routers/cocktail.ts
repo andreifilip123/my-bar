@@ -145,4 +145,50 @@ export const cocktailRouter = createTRPCRouter({
   deleteAll: protectedProcedure.mutation(async ({ ctx }) => {
     await ctx.prisma.cocktail.deleteMany();
   }),
+
+  getCocktailOfTheWeek: publicProcedure.query(async ({ ctx }) => {
+    const cocktailOfTheWeek = await ctx.prisma.cocktail.findFirst({
+      where: {
+        isCocktailOfTheWeek: true,
+      },
+    });
+
+    if (!cocktailOfTheWeek) {
+      throw new Error("No cocktail of the week found");
+    }
+
+    return cocktailOfTheWeek;
+  }),
+
+  setCocktailOfTheWeek: protectedProcedure
+    .input(z.object({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const cocktail = await ctx.prisma.cocktail.findFirstOrThrow({
+        where: {
+          name: input.name,
+        },
+      });
+
+      if (!cocktail) {
+        throw new Error("Cocktail not found");
+      }
+
+      await ctx.prisma.cocktail.updateMany({
+        where: {
+          isCocktailOfTheWeek: true,
+        },
+        data: {
+          isCocktailOfTheWeek: false,
+        },
+      });
+
+      return ctx.prisma.cocktail.update({
+        where: {
+          id: cocktail.id,
+        },
+        data: {
+          isCocktailOfTheWeek: true,
+        },
+      });
+    }),
 });

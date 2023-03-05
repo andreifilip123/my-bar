@@ -66,6 +66,7 @@ const Admin: NextPage = () => {
 
   const createCocktail = api.cocktail.create.useMutation();
   const deleteCocktail = api.cocktail.delete.useMutation();
+  const setCocktailOfTheWeek = api.cocktail.setCocktailOfTheWeek.useMutation();
   const createPresignedUrl = api.aws.createPresignedUrl.useMutation();
 
   const { register, handleSubmit, control, formState, reset } =
@@ -155,6 +156,18 @@ const Admin: NextPage = () => {
                       {ingredient.name}
                     </div>
                   ))}
+                </Td>
+                <Td>
+                  <Button
+                    onClick={() =>
+                      setCocktailOfTheWeek.mutateAsync(
+                        { name: cocktail.name },
+                        { onSuccess: async () => await cocktails.refetch() },
+                      )
+                    }
+                  >
+                    Mark as cocktail of the week
+                  </Button>
                 </Td>
                 <Td>
                   <Button

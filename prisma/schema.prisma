@@ -16,17 +16,18 @@ model Image {
 }
 
 model Cocktail {
-    id          String       @id @default(cuid())
-    name        String
-    createdAt   DateTime     @default(now())
-    updatedAt   DateTime     @updatedAt
-    ingredients Ingredient[]
-    garnishes   Garnish[]
-    ice         Ice[]
-    image       Image?       @relation(fields: [imageId], references: [id])
-    imageId     String       @unique
-    user        User?        @relation(fields: [userId], references: [id])
-    userId      String?
+    id                  String       @id @default(cuid())
+    name                String
+    createdAt           DateTime     @default(now())
+    updatedAt           DateTime     @updatedAt
+    ingredients         Ingredient[]
+    garnishes           Garnish[]
+    ice                 Ice[]
+    image               Image?       @relation(fields: [imageId], references: [id])
+    imageId             String       @unique
+    user                User?        @relation(fields: [userId], references: [id])
+    userId              String?
+    isCocktailOfTheWeek Boolean      @default(false)
 }
 
 model Ingredient {
