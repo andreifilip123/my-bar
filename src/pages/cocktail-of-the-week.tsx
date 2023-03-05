@@ -17,12 +17,11 @@ const CocktailOfTheWeek = () => {
   );
   targetDate.setHours(20);
 
-  // on wednesday at 20:00, we start a countdown timer until thursday at 20:00
-  // the rest of the week, we show the cocktail of the week with spotlights on it
+  const ONE_DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
   const shouldShowCountdownTimer =
-    (new Date().getDay() >= targetDate.getDay() - 1 &&
-      new Date().getHours() >= 20) ||
-    (new Date().getDay() === targetDate.getDay() && new Date().getHours() < 20);
+    targetDate.getTime() - ONE_DAY_IN_MILISECONDS < Date.now() &&
+    Date.now() < targetDate.getTime();
+
   const [showCocktail, setShowCocktail] = useState(!shouldShowCountdownTimer);
 
   const { data: cocktail } = api.cocktail.getCocktailOfTheWeek.useQuery(
