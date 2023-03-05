@@ -1,0 +1,28 @@
+.spotlightOn {
+  width: 100px;
+  height: 100px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 80%;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background: linear-gradient(
+      180deg,
+      rgba(236, 234, 135, 0.4) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    clip-path: polygon(12.5% 0, 37.5% 0, 100% 100%, 0% 100%);
+  }
+}
+
+.spotlightOff {
+  width: 100px;
+  height: 100px;
+
+  &::before {
+    display: none;
+  }
+}
