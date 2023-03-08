@@ -20,7 +20,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
   useEffect(() => {
     wakeUpDatabase.mutate();
-  }, [wakeUpDatabase]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SessionProvider session={session}>
