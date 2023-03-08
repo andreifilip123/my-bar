@@ -5,16 +5,16 @@ import ConfettiExplosion from "react-confetti-explosion";
 import CocktailCard from "../components/CocktailCard";
 import CountdownTimer from "../components/CountdownTimer";
 import Spotlight from "../components/Spotlight";
-import { serverEnv } from "../env/schema.mjs";
+import { clientEnv } from "../env/schema.mjs";
 import { api } from "../utils/api";
 import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
 const CocktailOfTheWeek = () => {
   const { width, height } = useWindowDimensions();
   let targetDate;
-  console.log("serverEnv.TARGET_DATE:", serverEnv.TARGET_DATE);
-  if (serverEnv.TARGET_DATE) {
-    targetDate = new Date(serverEnv.TARGET_DATE);
+  console.log("clientEnv.TARGET_DATE:", clientEnv.NEXT_PUBLIC_TARGET_DATE);
+  if (clientEnv.NEXT_PUBLIC_TARGET_DATE) {
+    targetDate = new Date(clientEnv.NEXT_PUBLIC_TARGET_DATE);
     console.log("set target date with server env:", targetDate);
   } else {
     // if no date is set, use the next thursday at 20:00
