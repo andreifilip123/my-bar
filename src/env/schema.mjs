@@ -58,7 +58,7 @@ export const serverEnv = {
  */
 export const clientSchema = z.object({
   // NEXT_PUBLIC_CLIENTVAR: z.string(),
-  NEXT_PUBLIC_TARGET_DATE: z.string().datetime(),
+  NEXT_PUBLIC_TARGET_DATE: z.string().datetime().optional(),
 });
 
 /**
