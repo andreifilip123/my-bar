@@ -19,6 +19,7 @@ specifiers:
   '@types/react-dom': ^18.0.10
   '@typescript-eslint/eslint-plugin': ^5.49.0
   '@typescript-eslint/parser': ^5.49.0
+  '@vercel/analytics': ^0.1.11
   autoprefixer: ^10.4.13
   aws-sdk: ^2.1305.0
   eslint: ^8.33.0
@@ -57,6 +58,7 @@ dependencies:
   '@trpc/react-query': 10.9.1_zbmbdjlledb5jdkr7yrwtjkb5m
   '@trpc/server': 10.9.1
   '@types/nodemailer': 6.4.7
+  '@vercel/analytics': 0.1.11_react@18.2.0
   aws-sdk: 2.1305.0
   framer-motion: 10.0.0_biqbaboplfbrettd7655fr4n2y
   json5: 2.2.3
@@ -1874,6 +1876,14 @@ packages:
       '@typescript-eslint/types': 5.49.0
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@vercel/analytics/0.1.11_react@18.2.0:
+    resolution: {integrity: sha512-mj5CPR02y0BRs1tN3oZcBNAX9a8NxsIUl9vElDPcqxnMfP0RbRc9fI9Ud7+QDg/1Izvt5uMumsr+6YsmVHcyuw==}
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@zag-js/element-size/0.3.0:
     resolution: {integrity: sha512-5/hEI+0c6ZNCx6KHlOS5/WeHsd6+I7gk7Y/b/zATp4Rp3tHirs/tu1frq+iy5BmfaG9hbQtfHfUJTjOcI5jnoQ==}
