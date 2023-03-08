@@ -12,10 +12,8 @@ import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 const CocktailOfTheWeek = () => {
   const { width, height } = useWindowDimensions();
   let targetDate;
-  console.log("clientEnv.TARGET_DATE:", clientEnv.NEXT_PUBLIC_TARGET_DATE);
   if (clientEnv.NEXT_PUBLIC_TARGET_DATE) {
     targetDate = new Date(clientEnv.NEXT_PUBLIC_TARGET_DATE);
-    console.log("set target date with server env:", targetDate);
   } else {
     // if no date is set, use the next thursday at 20:00
     targetDate = new Date();
@@ -23,7 +21,6 @@ const CocktailOfTheWeek = () => {
       targetDate.getDate() + ((4 + 7 - targetDate.getDay()) % 7),
     );
     targetDate.setHours(20);
-    console.log("set target date with default:", targetDate);
   }
 
   const ONE_DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
