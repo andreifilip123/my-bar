@@ -5,17 +5,23 @@ import ConfettiExplosion from "react-confetti-explosion";
 import CocktailCard from "../components/CocktailCard";
 import CountdownTimer from "../components/CountdownTimer";
 import Spotlight from "../components/Spotlight";
+import { serverEnv } from "../env/schema.mjs";
 import { api } from "../utils/api";
 import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
 const CocktailOfTheWeek = () => {
   const { width, height } = useWindowDimensions();
-  // thursday at 20:00
-  const targetDate = new Date();
-  targetDate.setDate(
-    targetDate.getDate() + ((4 + 7 - targetDate.getDay()) % 7),
-  );
-  targetDate.setHours(20);
+  let targetDate;
+  if (serverEnv.TARGET_DATE) {
+    targetDate = new Date(serverEnv.TARGET_DATE);
+  } else {
+    // if no date is set, use the next thursday at 20:00
+    targetDate = new Date();
+    targetDate.setDate(
+      targetDate.getDate() + ((4 + 7 - targetDate.getDay()) % 7),
+    );
+    targetDate.setHours(20);
+  }
 
   const ONE_DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
   const shouldShowCountdownTimer =
