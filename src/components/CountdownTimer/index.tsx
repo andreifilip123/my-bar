@@ -22,7 +22,10 @@ const CountdownTimer: FC<Props> = ({ targetDate, onComplete }) => {
       <Text fontSize="8xl" fontWeight="bold" color="white">
         {days
           ? `${days} days ${hours} hours`
-          : `${hours}:${minutes}:${seconds}`}
+          : `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+              2,
+              "0",
+            )}:${String(seconds).padStart(2, "0")}`}
       </Text>
     );
   }
