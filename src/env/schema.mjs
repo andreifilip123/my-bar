@@ -28,6 +28,7 @@ export const serverSchema = z.object({
   OPENAI_API_KEY: z.string(),
   EMAIL_SERVER: z.string(),
   EMAIL_FROM: z.string(),
+  TARGET_DATE: z.string().datetime(),
 });
 
 /**
@@ -49,6 +50,7 @@ export const serverEnv = {
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   EMAIL_SERVER: process.env.EMAIL_SERVER,
   EMAIL_FROM: process.env.EMAIL_FROM,
+  TARGET_DATE: process.env.TARGET_DATE,
 };
 
 /**
