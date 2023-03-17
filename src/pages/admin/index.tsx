@@ -92,11 +92,16 @@ const Admin: NextPage = () => {
   const { register, handleSubmit, control, formState, reset } =
     useForm<IFormInputs>({
       resolver: zodResolver(formSchema),
+      defaultValues: {
+        ingredients: [{ amount: 0, unit: "", name: "" }],
+        garnishes: [{ amount: 0, unit: "", name: "" }],
+      },
     });
   const {
     fields: ingredients,
     append: appendIngredient,
     remove: removeIngredient,
+    replace: replaceIngredient,
   } = useFieldArray({
     control,
     name: "ingredients",
@@ -108,6 +113,7 @@ const Admin: NextPage = () => {
     fields: garnishes,
     append: appendGarnish,
     remove: removeGarnish,
+    replace: replaceGarnish,
   } = useFieldArray({
     control,
     name: "garnishes",
@@ -161,6 +167,9 @@ const Admin: NextPage = () => {
           },
         },
       );
+
+      replaceIngredient([{ amount: 0, unit: "", name: "" }]);
+      replaceGarnish([{ amount: 0, unit: "", name: "" }]);
     } catch (e) {
       console.log(e);
     }
