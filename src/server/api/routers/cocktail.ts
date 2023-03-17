@@ -78,7 +78,11 @@ export const cocktailRouter = createTRPCRouter({
             create: {
               name: garnish.ingredient,
               amount: garnish.amount,
-              unit: garnish.unit,
+              unit: {
+                connect: {
+                  name: garnish.unit,
+                },
+              },
             },
             update: {},
           });
