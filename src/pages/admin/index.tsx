@@ -18,7 +18,8 @@ import type { PresignedPost } from "aws-sdk/clients/s3";
 import type { NextPage } from "next";
 import { Fragment } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import Creatable from "react-select/creatable";
 import z from "zod";
 
 import { api } from "../../utils/api";
@@ -28,13 +29,13 @@ interface IFormInputs {
   image: FileList;
   ingredients: Array<{
     amount: number;
-    unit: string;
-    name: string;
+    unit: { value: string; label: string };
+    name: { value: string; label: string };
   }>;
   garnishes: Array<{
     amount: number;
-    unit: string;
-    name: string;
+    unit: { value: string; label: string };
+    name: { value: string; label: string };
   }>;
   ice: string;
 }
@@ -59,9 +60,7 @@ const formSchema = z.object({
   ingredients: z.array(
     z.object({
       amount: z.number().min(0, { message: "Amount should be positive" }),
-      unit: z
-        .string()
-        .min(1, { message: "Unit must be at least 1 character long" }),
+      unit: z.object({ value: z.string(), label: z.string() }),
       name: z.string().min(1, {
         message: "Ingredient name must be at least 1 character long",
       }),
@@ -82,7 +81,23 @@ const formSchema = z.object({
 });
 
 const Admin: NextPage = () => {
-  const cocktails = api.cocktail.all.useQuery(undefined, {});
+  const { data: cocktails, refetch } = api.cocktail.all.useQuery(undefined, {});
+  const { data: units } = api.unit.all.useQuery(undefined, {});
+  const unitOptions =
+    units?.map((unit) => ({
+      value: unit.id,
+      label: unit.name,
+    })) || [];
+  const { data: ingredients } = api.ingredient.all.useQuery(undefined, {});
+  const ingredientOptions = ingredients?.map((ingredient) => ({
+    value: ingredient.id,
+    label: ingredient.name,
+  }));
+  const { data: garnishes } = api.garnish.all.useQuery(undefined, {});
+  const garnishOptions = garnishes?.map((garnish) => ({
+    value: garnish.id,
+    label: garnish.name,
+  }));
 
   const createCocktail = api.cocktail.create.useMutation();
   const deleteCocktail = api.cocktail.delete.useMutation();
@@ -93,12 +108,12 @@ const Admin: NextPage = () => {
     useForm<IFormInputs>({
       resolver: zodResolver(formSchema),
       defaultValues: {
-        ingredients: [{ amount: 0, unit: "", name: "" }],
-        garnishes: [{ amount: 0, unit: "", name: "" }],
+        ingredients: [{ amount: 0, unit: undefined, name: undefined }],
+        garnishes: [{ amount: 0, unit: undefined, name: undefined }],
       },
     });
   const {
-    fields: ingredients,
+    fields: ingredientFields,
     append: appendIngredient,
     remove: removeIngredient,
     replace: replaceIngredient,
@@ -110,7 +125,7 @@ const Admin: NextPage = () => {
     },
   });
   const {
-    fields: garnishes,
+    fields: garnishFields,
     append: appendGarnish,
     remove: removeGarnish,
     replace: replaceGarnish,
@@ -150,26 +165,38 @@ const Admin: NextPage = () => {
           imageId: imageKey,
           ingredients: data.ingredients.map((ingredient) => ({
             amount: ingredient.amount,
-            unit: ingredient.unit,
-            ingredient: ingredient.name,
+            unit: ingredient.unit.label,
+            ingredient: ingredient.name.label,
           })),
           garnishes: data.garnishes.map((garnish) => ({
             amount: garnish.amount,
-            unit: garnish.unit,
-            ingredient: garnish.name,
+            unit: garnish.unit.label,
+            ingredient: garnish.name.label,
           })),
           ice: { type: data.ice },
         },
         {
           onSuccess: async () => {
-            await cocktails.refetch();
+            await refetch();
             reset();
           },
         },
       );
 
-      replaceIngredient([{ amount: 0, unit: "", name: "" }]);
-      replaceGarnish([{ amount: 0, unit: "", name: "" }]);
+      replaceIngredient([
+        {
+          amount: 0,
+          unit: { value: "", label: "" },
+          name: { value: "", label: "" },
+        },
+      ]);
+      replaceGarnish([
+        {
+          amount: 0,
+          unit: { value: "", label: "" },
+          name: { value: "", label: "" },
+        },
+      ]);
     } catch (e) {
       console.log(e);
     }
@@ -188,7 +215,7 @@ const Admin: NextPage = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {cocktails.data?.map((cocktail) => (
+              {cocktails?.map((cocktail) => (
                 <Tr key={cocktail.id}>
                   <Td>{cocktail.name}</Td>
                   <Td>
@@ -204,7 +231,7 @@ const Admin: NextPage = () => {
                       onClick={() =>
                         setCocktailOfTheWeek.mutateAsync(
                           { name: cocktail.name },
-                          { onSuccess: async () => await cocktails.refetch() },
+                          { onSuccess: async () => await refetch() },
                         )
                       }
                     >
@@ -216,7 +243,7 @@ const Admin: NextPage = () => {
                       onClick={() =>
                         deleteCocktail.mutateAsync(
                           { name: cocktail.name },
-                          { onSuccess: async () => await cocktails.refetch() },
+                          { onSuccess: async () => await refetch() },
                         )
                       }
                     >
@@ -236,7 +263,7 @@ const Admin: NextPage = () => {
           <Input placeholder="Cocktail name" {...register("name")} />
           <p className="text-red-600">{formState.errors.name?.message}</p>
 
-          {ingredients.map((ingredient, index) => (
+          {ingredientFields.map((ingredient, index) => (
             <Fragment key={ingredient.id}>
               <p className="text-red-600">
                 {formState.errors.ingredients?.[index]?.amount?.message}
@@ -255,13 +282,20 @@ const Admin: NextPage = () => {
                     valueAsNumber: true,
                   })}
                 />
-                <Input
-                  placeholder="Unit"
-                  {...register(`ingredients.${index}.unit`)}
+                <Controller
+                  name={`ingredients.${index}.unit`}
+                  control={control}
+                  render={({ field }) => (
+                    <Creatable {...field} options={unitOptions} />
+                  )}
                 />
-                <Input
-                  placeholder="Ingredient"
-                  {...register(`ingredients.${index}.name`)}
+
+                <Controller
+                  name={`ingredients.${index}.name`}
+                  control={control}
+                  render={({ field }) => (
+                    <Creatable {...field} options={ingredientOptions} />
+                  )}
                 />
 
                 <Button onClick={() => removeIngredient(index)}>
@@ -273,12 +307,18 @@ const Admin: NextPage = () => {
 
           <Button
             m={4}
-            onClick={() => appendIngredient({ name: "", amount: 0, unit: "" })}
+            onClick={() =>
+              appendIngredient({
+                name: { label: "", value: "" },
+                amount: 0,
+                unit: { label: "", value: "" },
+              })
+            }
           >
             Add ingredient
           </Button>
 
-          {garnishes.map((garnish, index) => (
+          {garnishFields.map((garnish, index) => (
             <Fragment key={garnish.id}>
               <p className="text-red-600">
                 {formState.errors.garnishes?.[index]?.amount?.message}
@@ -297,13 +337,20 @@ const Admin: NextPage = () => {
                     valueAsNumber: true,
                   })}
                 />
-                <Input
-                  placeholder="Unit"
-                  {...register(`garnishes.${index}.unit`)}
+                <Controller
+                  name={`garnishes.${index}.unit`}
+                  control={control}
+                  render={({ field }) => (
+                    <Creatable {...field} options={unitOptions} />
+                  )}
                 />
-                <Input
-                  placeholder="Garnish"
-                  {...register(`garnishes.${index}.name`)}
+
+                <Controller
+                  name={`garnishes.${index}.name`}
+                  control={control}
+                  render={({ field }) => (
+                    <Creatable {...field} options={garnishOptions} />
+                  )}
                 />
 
                 <Button onClick={() => removeGarnish(index)}>
@@ -315,7 +362,13 @@ const Admin: NextPage = () => {
 
           <Button
             m={4}
-            onClick={() => appendGarnish({ name: "", amount: 0, unit: "" })}
+            onClick={() =>
+              appendGarnish({
+                name: { value: "", label: "" },
+                amount: 0,
+                unit: { value: "", label: "" },
+              })
+            }
           >
             Add garnish
           </Button>
