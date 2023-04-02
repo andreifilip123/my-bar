@@ -66,9 +66,7 @@ const formSchema = z.object({
     z.object({
       amount: z.string(),
       unit: z.object({ value: z.string(), label: z.string() }),
-      name: z.string().min(1, {
-        message: "Ingredient name must be at least 1 character long",
-      }),
+      name: z.object({ value: z.string(), label: z.string() }),
     }),
   ),
   garnishes: z.array(
@@ -77,9 +75,7 @@ const formSchema = z.object({
       unit: z
         .string()
         .min(1, { message: "Unit must be at least 1 character long" }),
-      name: z.string().min(1, {
-        message: "Ingredient name must be at least 1 character long",
-      }),
+      name: z.object({ value: z.string(), label: z.string() }),
     }),
   ),
   ice: z.string(),
