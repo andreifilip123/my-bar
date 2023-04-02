@@ -48,6 +48,19 @@ export const cocktailRouter = createTRPCRouter({
           });
         }),
       );
+      await Promise.all(
+        input.garnishes.map(async (garnish) => {
+          await ctx.prisma.unit.upsert({
+            where: {
+              name: garnish.unit,
+            },
+            create: {
+              name: garnish.unit,
+            },
+            update: {},
+          });
+        }),
+      );
       // create ingredients
       await Promise.all(
         input.ingredients.map(async (ingredient) => {
