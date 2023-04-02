@@ -4,6 +4,11 @@ import {
   Center,
   Heading,
   Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   SimpleGrid,
   Table,
   TableContainer,
@@ -28,12 +33,12 @@ interface IFormInputs {
   name: string;
   image: FileList;
   ingredients: Array<{
-    amount: number;
+    amount: string;
     unit: { value: string; label: string };
     name: { value: string; label: string };
   }>;
   garnishes: Array<{
-    amount: number;
+    amount: string;
     unit: { value: string; label: string };
     name: { value: string; label: string };
   }>;
@@ -59,7 +64,7 @@ const formSchema = z.object({
     ),
   ingredients: z.array(
     z.object({
-      amount: z.number().min(0, { message: "Amount should be positive" }),
+      amount: z.string(),
       unit: z.object({ value: z.string(), label: z.string() }),
       name: z.string().min(1, {
         message: "Ingredient name must be at least 1 character long",
@@ -108,8 +113,8 @@ const Admin: NextPage = () => {
     useForm<IFormInputs>({
       resolver: zodResolver(formSchema),
       defaultValues: {
-        ingredients: [{ amount: 0, unit: undefined, name: undefined }],
-        garnishes: [{ amount: 0, unit: undefined, name: undefined }],
+        ingredients: [{ amount: "0", unit: undefined, name: undefined }],
+        garnishes: [{ amount: "0", unit: undefined, name: undefined }],
       },
     });
   const {
@@ -164,12 +169,12 @@ const Admin: NextPage = () => {
           name: data.name,
           imageId: imageKey,
           ingredients: data.ingredients.map((ingredient) => ({
-            amount: ingredient.amount,
+            amount: Number(ingredient.amount),
             unit: ingredient.unit.label,
             ingredient: ingredient.name.label,
           })),
           garnishes: data.garnishes.map((garnish) => ({
-            amount: garnish.amount,
+            amount: Number(garnish.amount),
             unit: garnish.unit.label,
             ingredient: garnish.name.label,
           })),
@@ -185,14 +190,14 @@ const Admin: NextPage = () => {
 
       replaceIngredient([
         {
-          amount: 0,
+          amount: "0",
           unit: { value: "", label: "" },
           name: { value: "", label: "" },
         },
       ]);
       replaceGarnish([
         {
-          amount: 0,
+          amount: "0",
           unit: { value: "", label: "" },
           name: { value: "", label: "" },
         },
@@ -275,12 +280,26 @@ const Admin: NextPage = () => {
                 {formState.errors.ingredients?.[index]?.name?.message}
               </p>
               <SimpleGrid columns={4} key={ingredient.id}>
-                <Input
-                  placeholder="Amount"
-                  type={"number"}
-                  {...register(`ingredients.${index}.amount`, {
-                    valueAsNumber: true,
-                  })}
+                <Controller
+                  name={`ingredients.${index}.amount`}
+                  control={control}
+                  defaultValue={"1"}
+                  render={({ field }) => (
+                    <NumberInput
+                      {...field}
+                      defaultValue={field.value}
+                      step={0.1}
+                      precision={1}
+                      min={0}
+                      onChange={(value) => field.onChange(value)}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  )}
                 />
                 <Controller
                   name={`ingredients.${index}.unit`}
@@ -318,7 +337,7 @@ const Admin: NextPage = () => {
             onClick={() =>
               appendIngredient({
                 name: { label: "", value: "" },
-                amount: 0,
+                amount: "0",
                 unit: { label: "", value: "" },
               })
             }
@@ -338,12 +357,26 @@ const Admin: NextPage = () => {
                 {formState.errors.garnishes?.[index]?.name?.message}
               </p>
               <SimpleGrid columns={4} key={garnish.id}>
-                <Input
-                  placeholder="Amount"
-                  type={"number"}
-                  {...register(`garnishes.${index}.amount`, {
-                    valueAsNumber: true,
-                  })}
+                <Controller
+                  name={`garnishes.${index}.amount`}
+                  control={control}
+                  defaultValue={"1"}
+                  render={({ field }) => (
+                    <NumberInput
+                      {...field}
+                      defaultValue={field.value}
+                      step={0.1}
+                      precision={1}
+                      min={0}
+                      onChange={(value) => field.onChange(value)}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  )}
                 />
                 <Controller
                   name={`garnishes.${index}.unit`}
@@ -381,7 +414,7 @@ const Admin: NextPage = () => {
             onClick={() =>
               appendGarnish({
                 name: { value: "", label: "" },
-                amount: 0,
+                amount: "0",
                 unit: { value: "", label: "" },
               })
             }
