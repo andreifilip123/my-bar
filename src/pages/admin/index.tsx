@@ -286,7 +286,11 @@ const Admin: NextPage = () => {
                   name={`ingredients.${index}.unit`}
                   control={control}
                   render={({ field }) => (
-                    <Creatable {...field} options={unitOptions} />
+                    <Creatable
+                      {...field}
+                      instanceId={`ingredients.${index}.unit`}
+                      options={unitOptions}
+                    />
                   )}
                 />
 
@@ -294,7 +298,11 @@ const Admin: NextPage = () => {
                   name={`ingredients.${index}.name`}
                   control={control}
                   render={({ field }) => (
-                    <Creatable {...field} options={ingredientOptions} />
+                    <Creatable
+                      {...field}
+                      instanceId={`ingredients.${index}.name`}
+                      options={ingredientOptions}
+                    />
                   )}
                 />
 
@@ -341,7 +349,11 @@ const Admin: NextPage = () => {
                   name={`garnishes.${index}.unit`}
                   control={control}
                   render={({ field }) => (
-                    <Creatable {...field} options={unitOptions} />
+                    <Creatable
+                      {...field}
+                      instanceId={`garnishes.${index}.unit`}
+                      options={unitOptions}
+                    />
                   )}
                 />
 
@@ -349,7 +361,11 @@ const Admin: NextPage = () => {
                   name={`garnishes.${index}.name`}
                   control={control}
                   render={({ field }) => (
-                    <Creatable {...field} options={garnishOptions} />
+                    <Creatable
+                      {...field}
+                      instanceId={`garnishes.${index}.name`}
+                      options={garnishOptions}
+                    />
                   )}
                 />
 
