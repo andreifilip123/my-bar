@@ -235,6 +235,7 @@ const Admin: NextPage = () => {
                   </Td>
                   <Td>
                     <Button
+                      variant="ghost"
                       onClick={() =>
                         setCocktailOfTheWeek.mutateAsync(
                           { name: cocktail.name },
@@ -242,11 +243,12 @@ const Admin: NextPage = () => {
                         )
                       }
                     >
-                      Mark as cocktail of the week
+                      🌟
                     </Button>
                   </Td>
                   <Td>
                     <Button
+                      variant="ghost"
                       onClick={() =>
                         deleteCocktail.mutateAsync(
                           { name: cocktail.name },
@@ -254,7 +256,7 @@ const Admin: NextPage = () => {
                         )
                       }
                     >
-                      Delete
+                      🗑️
                     </Button>
                   </Td>
                 </Tr>
