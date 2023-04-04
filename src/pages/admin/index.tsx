@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   Heading,
   Input,
   NumberDecrementStepper,
@@ -272,6 +273,25 @@ const Admin: NextPage = () => {
           <Input placeholder="Cocktail name" {...register("name")} />
           <p className="text-red-600">{formState.errors.name?.message}</p>
 
+          <Flex justifyContent="space-between" alignItems="center">
+            <Heading as="h3" size="md">
+              Ingredients:
+            </Heading>
+
+            <Button
+              variant="ghost"
+              onClick={() =>
+                appendIngredient({
+                  name: { label: "", value: "" },
+                  amount: "0",
+                  unit: { label: "", value: "" },
+                })
+              }
+            >
+              +
+            </Button>
+          </Flex>
+
           {ingredientFields.map((ingredient, index) => (
             <Fragment key={ingredient.id}>
               <p className="text-red-600">
@@ -283,7 +303,12 @@ const Admin: NextPage = () => {
               <p className="text-red-600">
                 {formState.errors.ingredients?.[index]?.name?.message}
               </p>
-              <SimpleGrid columns={4} key={ingredient.id}>
+              <SimpleGrid
+                columns={4}
+                key={ingredient.id}
+                templateColumns="auto 1fr 1fr auto"
+                gap={2}
+              >
                 <Controller
                   name={`ingredients.${index}.amount`}
                   control={control}
@@ -296,6 +321,7 @@ const Admin: NextPage = () => {
                       precision={1}
                       min={0}
                       onChange={(value) => field.onChange(value)}
+                      maxW="100px"
                     >
                       <NumberInputField />
                       <NumberInputStepper>
@@ -329,25 +355,31 @@ const Admin: NextPage = () => {
                   )}
                 />
 
-                <Button onClick={() => removeIngredient(index)}>
-                  Remove ingredient
+                <Button variant="ghost" onClick={() => removeIngredient(index)}>
+                  🗑️
                 </Button>
               </SimpleGrid>
             </Fragment>
           ))}
 
-          <Button
-            m={4}
-            onClick={() =>
-              appendIngredient({
-                name: { label: "", value: "" },
-                amount: "0",
-                unit: { label: "", value: "" },
-              })
-            }
-          >
-            Add ingredient
-          </Button>
+          <Flex justifyContent="space-between" alignItems="center">
+            <Heading as="h3" size="md">
+              Garnishes:
+            </Heading>
+
+            <Button
+              variant="ghost"
+              onClick={() =>
+                appendGarnish({
+                  name: { value: "", label: "" },
+                  amount: "0",
+                  unit: { value: "", label: "" },
+                })
+              }
+            >
+              +
+            </Button>
+          </Flex>
 
           {garnishFields.map((garnish, index) => (
             <Fragment key={garnish.id}>
@@ -360,7 +392,11 @@ const Admin: NextPage = () => {
               <p className="text-red-600">
                 {formState.errors.garnishes?.[index]?.name?.message}
               </p>
-              <SimpleGrid columns={4} key={garnish.id}>
+              <SimpleGrid
+                columns={4}
+                key={garnish.id}
+                templateColumns="auto 1fr 1fr auto"
+              >
                 <Controller
                   name={`garnishes.${index}.amount`}
                   control={control}
@@ -373,6 +409,7 @@ const Admin: NextPage = () => {
                       precision={1}
                       min={0}
                       onChange={(value) => field.onChange(value)}
+                      maxW="100px"
                     >
                       <NumberInputField />
                       <NumberInputStepper>
@@ -406,25 +443,16 @@ const Admin: NextPage = () => {
                   )}
                 />
 
-                <Button onClick={() => removeGarnish(index)}>
-                  Remove garnish
+                <Button variant="ghost" onClick={() => removeGarnish(index)}>
+                  🗑️
                 </Button>
               </SimpleGrid>
             </Fragment>
           ))}
 
-          <Button
-            m={4}
-            onClick={() =>
-              appendGarnish({
-                name: { value: "", label: "" },
-                amount: "0",
-                unit: { value: "", label: "" },
-              })
-            }
-          >
-            Add garnish
-          </Button>
+          <Heading as="h3" size="md">
+            Ice type:
+          </Heading>
 
           <Controller
             name="ice"
@@ -434,9 +462,13 @@ const Admin: NextPage = () => {
             )}
           />
 
+          <Heading as="h3" size="md">
+            Image:
+          </Heading>
+
           <Input type="file" multiple={false} {...register("image")} />
 
-          <Input type="submit" />
+          <Input type="submit" my={2} />
         </Box>
       </Box>
     </Center>
