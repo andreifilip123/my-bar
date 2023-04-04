@@ -17,6 +17,7 @@ import {
   Td,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -235,30 +236,34 @@ const Admin: NextPage = () => {
                     ))}
                   </Td>
                   <Td>
-                    <Button
-                      variant="ghost"
-                      onClick={() =>
-                        setCocktailOfTheWeek.mutateAsync(
-                          { name: cocktail.name },
-                          { onSuccess: async () => await refetch() },
-                        )
-                      }
-                    >
-                      🌟
-                    </Button>
+                    <Tooltip label="Set as cocktail of the week">
+                      <Button
+                        variant="ghost"
+                        onClick={() =>
+                          setCocktailOfTheWeek.mutateAsync(
+                            { name: cocktail.name },
+                            { onSuccess: async () => await refetch() },
+                          )
+                        }
+                      >
+                        🌟
+                      </Button>
+                    </Tooltip>
                   </Td>
                   <Td>
-                    <Button
-                      variant="ghost"
-                      onClick={() =>
-                        deleteCocktail.mutateAsync(
-                          { name: cocktail.name },
-                          { onSuccess: async () => await refetch() },
-                        )
-                      }
-                    >
-                      🗑️
-                    </Button>
+                    <Tooltip label="Delete cocktail">
+                      <Button
+                        variant="ghost"
+                        onClick={() =>
+                          deleteCocktail.mutateAsync(
+                            { name: cocktail.name },
+                            { onSuccess: async () => await refetch() },
+                          )
+                        }
+                      >
+                        🗑️
+                      </Button>
+                    </Tooltip>
                   </Td>
                 </Tr>
               ))}
@@ -278,18 +283,20 @@ const Admin: NextPage = () => {
               Ingredients:
             </Heading>
 
-            <Button
-              variant="ghost"
-              onClick={() =>
-                appendIngredient({
-                  name: { label: "", value: "" },
-                  amount: "0",
-                  unit: { label: "", value: "" },
-                })
-              }
-            >
-              +
-            </Button>
+            <Tooltip label="Add new ingredient">
+              <Button
+                variant="ghost"
+                onClick={() =>
+                  appendIngredient({
+                    name: { label: "", value: "" },
+                    amount: "0",
+                    unit: { label: "", value: "" },
+                  })
+                }
+              >
+                +
+              </Button>
+            </Tooltip>
           </Flex>
 
           {ingredientFields.map((ingredient, index) => (
@@ -357,9 +364,14 @@ const Admin: NextPage = () => {
                   )}
                 />
 
-                <Button variant="ghost" onClick={() => removeIngredient(index)}>
-                  🗑️
-                </Button>
+                <Tooltip label="Delete ingredient">
+                  <Button
+                    variant="ghost"
+                    onClick={() => removeIngredient(index)}
+                  >
+                    🗑️
+                  </Button>
+                </Tooltip>
               </SimpleGrid>
             </Fragment>
           ))}
@@ -369,18 +381,20 @@ const Admin: NextPage = () => {
               Garnishes:
             </Heading>
 
-            <Button
-              variant="ghost"
-              onClick={() =>
-                appendGarnish({
-                  name: { value: "", label: "" },
-                  amount: "0",
-                  unit: { value: "", label: "" },
-                })
-              }
-            >
-              +
-            </Button>
+            <Tooltip label="Add new garnish">
+              <Button
+                variant="ghost"
+                onClick={() =>
+                  appendGarnish({
+                    name: { value: "", label: "" },
+                    amount: "0",
+                    unit: { value: "", label: "" },
+                  })
+                }
+              >
+                +
+              </Button>
+            </Tooltip>
           </Flex>
 
           {garnishFields.map((garnish, index) => (
@@ -447,9 +461,11 @@ const Admin: NextPage = () => {
                   )}
                 />
 
-                <Button variant="ghost" onClick={() => removeGarnish(index)}>
-                  🗑️
-                </Button>
+                <Tooltip label="Delete garnish">
+                  <Button variant="ghost" onClick={() => removeGarnish(index)}>
+                    🗑️
+                  </Button>
+                </Tooltip>
               </SimpleGrid>
             </Fragment>
           ))}
