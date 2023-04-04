@@ -42,7 +42,7 @@ interface IFormInputs {
     unit: { value: string; label: string };
     name: { value: string; label: string };
   }>;
-  ice: string;
+  ice: { value: string; label: string };
 }
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -71,14 +71,12 @@ const formSchema = z.object({
   ),
   garnishes: z.array(
     z.object({
-      amount: z.number().min(0, { message: "Amount should be positive" }),
-      unit: z
-        .string()
-        .min(1, { message: "Unit must be at least 1 character long" }),
+      amount: z.string(),
+      unit: z.object({ value: z.string(), label: z.string() }),
       name: z.object({ value: z.string(), label: z.string() }),
     }),
   ),
-  ice: z.string(),
+  ice: z.object({ value: z.string(), label: z.string() }),
 });
 
 const Admin: NextPage = () => {
@@ -88,6 +86,12 @@ const Admin: NextPage = () => {
     units?.map((unit) => ({
       value: unit.id,
       label: unit.name,
+    })) || [];
+  const { data: iceTypes } = api.ice.all.useQuery(undefined, {});
+  const iceOptions =
+    iceTypes?.map((iceType) => ({
+      value: iceType.id,
+      label: iceType.type,
     })) || [];
   const { data: ingredients } = api.ingredient.all.useQuery(undefined, {});
   const ingredientOptions = ingredients?.map((ingredient) => ({
@@ -105,12 +109,13 @@ const Admin: NextPage = () => {
   const setCocktailOfTheWeek = api.cocktail.setCocktailOfTheWeek.useMutation();
   const createPresignedUrl = api.aws.createPresignedUrl.useMutation();
 
-  const { register, handleSubmit, control, formState, reset } =
+  const { register, handleSubmit, control, formState, reset, setValue } =
     useForm<IFormInputs>({
       resolver: zodResolver(formSchema),
       defaultValues: {
         ingredients: [{ amount: "0", unit: undefined, name: undefined }],
         garnishes: [{ amount: "0", unit: undefined, name: undefined }],
+        ice: undefined,
       },
     });
   const {
@@ -174,7 +179,7 @@ const Admin: NextPage = () => {
             unit: garnish.unit.label,
             ingredient: garnish.name.label,
           })),
-          ice: { type: data.ice },
+          ice: { type: data.ice.value },
         },
         {
           onSuccess: async () => {
@@ -198,6 +203,7 @@ const Admin: NextPage = () => {
           name: { value: "", label: "" },
         },
       ]);
+      setValue("ice", { value: "", label: "" });
     } catch (e) {
       console.log(e);
     }
@@ -418,7 +424,13 @@ const Admin: NextPage = () => {
             Add garnish
           </Button>
 
-          <Input placeholder="Ice" {...register("ice")} />
+          <Controller
+            name="ice"
+            control={control}
+            render={({ field }) => (
+              <Creatable {...field} instanceId="ice" options={iceOptions} />
+            )}
+          />
 
           <Input type="file" multiple={false} {...register("image")} />
 
