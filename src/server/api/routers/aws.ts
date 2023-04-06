@@ -1,15 +1,16 @@
-import S3 from "aws-sdk/clients/s3";
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
+import { getSignedUrl as awsGetSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { z } from "zod";
 
 import { serverEnv } from "../../../env/schema.mjs";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-const s3 = new S3({
-  apiVersion: "2006-03-01",
-  accessKeyId: serverEnv.ACCESS_KEY,
-  secretAccessKey: serverEnv.SECRET_ACCESS_KEY,
-  region: serverEnv.REGION,
-});
+const s3 = new S3Client({ region: serverEnv.REGION });
 
 export const awsRouter = createTRPCRouter({
   createPresignedUrl: protectedProcedure
@@ -30,54 +31,52 @@ export const awsRouter = createTRPCRouter({
         },
       });
 
-      return new Promise((resolve, reject) => {
-        s3.createPresignedPost(
-          {
-            Fields: {
-              key: image.id,
-              "Content-Type": input.fileType,
-            },
+      return new Promise(async (resolve, reject) => {
+        try {
+          if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
+          const signedPost = await createPresignedPost(s3, {
+            Bucket: serverEnv.BUCKET_NAME,
+            Key: image.id,
             Conditions: [
               ["content-length-range", 0, 10 * 1024 * 1024], // up to 10 MB
               ["starts-with", "$Content-Type", "image/"],
             ],
+            Fields: {
+              key: image.id,
+              "Content-Type": input.fileType,
+            },
             Expires: 60, // seconds
-            Bucket: serverEnv.BUCKET_NAME,
-          },
-          (err, signed) => {
-            if (err) return reject(err);
-            resolve(signed);
-          },
-        );
+          });
+          resolve(signedPost);
+        } catch (error) {
+          reject(error);
+        }
       });
     }),
 
   getSignedUrl: publicProcedure
     .input(z.object({ imageKey: z.string() }))
-    .query(({ input }) => {
+    .query(async ({ input }) => {
       if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
 
-      const url = s3.getSignedUrl("getObject", {
+      const command = new GetObjectCommand({
         Bucket: serverEnv.BUCKET_NAME,
         Key: input.imageKey,
-        Expires: 60 * 15, // 15 minutes
       });
+      const url = await awsGetSignedUrl(s3, command, { expiresIn: 15 * 60 }); // expires in seconds
 
       return url;
     }),
 
   deleteFromS3: protectedProcedure
     .input(z.object({ key: z.string() }))
-    .mutation(({ input }) => {
+    .mutation(async ({ input }) => {
       if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
 
-      const deletePromise = s3
-        .deleteObject({
-          Bucket: serverEnv.BUCKET_NAME,
-          Key: input.key,
-        })
-        .promise();
-
-      return deletePromise;
+      const command = new DeleteObjectCommand({
+        Bucket: serverEnv.BUCKET_NAME,
+        Key: input.key,
+      });
+      await s3.send(command);
     }),
 });

@@ -1,52 +1,51 @@
+import type { PresignedPost } from "@aws-sdk/s3-presigned-post";
 import { Flex, Heading, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { PresignedPost } from "aws-sdk/clients/s3";
 import type { NextPage } from "next";
-import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import z from "zod";
-import { useRobotContext } from "../../contexts/useRobotContext";
+import { useRobotContext } from "../../../../contexts/useRobotContext";
 
-import { api } from "../../utils/api";
+import { api } from "../../../../utils/api";
+import Dropzone from "../../Dropzone";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const formSchema = z.object({
   image: z
-    .any()
+    .custom<FileList>()
+    .refine((file) => file?.length == 1, "Image is required.")
+    .transform(([file]) => file)
     .refine(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      (files) => files[0]?.size <= MAX_FILE_SIZE,
-      `File size should be less than ${MAX_FILE_SIZE / 1024 / 1024}MB.`,
+      (file) => file?.size && file?.size <= MAX_FILE_SIZE,
+      `Max image size is 10MB.`,
     )
     .refine(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files[0]?.type),
+      (file) => file?.type && ACCEPTED_IMAGE_TYPES.includes(file?.type),
       "Only .jpg, .jpeg, .png and .webp formats are supported.",
     ),
 });
 
-type IFormInputs = {
-  image: FileList;
-};
+type FormSchema = z.infer<typeof formSchema>;
 
-const Admin: NextPage = () => {
+const UploadImage: NextPage = () => {
   const { setImage, setCurrentStep } = useRobotContext();
 
   const createPresignedUrl = api.aws.createPresignedUrl.useMutation();
 
-  const { register, handleSubmit } = useForm<IFormInputs>({
+  const { handleSubmit, control } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit: SubmitHandler<IFormInputs> = async (data: IFormInputs) => {
-    if (!data.image[0]) return;
+  const onSubmit = async (data: FormSchema) => {
+    if (!data.image) return;
+    const file = data.image;
 
     try {
       const presigned = (await createPresignedUrl.mutateAsync({
-        fileName: data.image[0]?.name,
-        fileType: data.image[0]?.type,
+        fileName: file.name,
+        fileType: file.type,
       })) as PresignedPost;
       const { url, fields } = presigned;
 
@@ -54,11 +53,9 @@ const Admin: NextPage = () => {
 
       const formData = new FormData();
 
-      Object.entries({ ...fields, file: data.image[0] }).forEach(
-        ([key, value]) => {
-          formData.append(key, value as string | Blob);
-        },
-      );
+      Object.entries({ ...fields, file }).forEach(([key, value]) => {
+        formData.append(key, value as string | Blob);
+      });
 
       await fetch(url, {
         method: "POST",
@@ -78,7 +75,13 @@ const Admin: NextPage = () => {
         Upload an image
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="file" multiple={false} {...register("image")} />
+        <Controller
+          name="image"
+          control={control}
+          render={({ field }) => (
+            <Dropzone {...field} onFileAccepted={field.onChange} />
+          )}
+        />
 
         <Input type="submit" mt={5} />
       </form>
@@ -86,4 +89,4 @@ const Admin: NextPage = () => {
   );
 };
 
-export default Admin;
+export default UploadImage;
