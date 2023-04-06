@@ -57,7 +57,7 @@ dependencies:
     version: 2.2.3
   next:
     specifier: 13.3.0
-    version: 13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.60.0)
+    version: 13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.61.0)
   next-auth:
     specifier: ^4.21.1
     version: 4.21.1(next@13.3.0)(nodemailer@6.9.1)(react-dom@18.2.0)(react@18.2.0)
@@ -86,8 +86,8 @@ dependencies:
     specifier: ^5.7.2
     version: 5.7.2(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
   sass:
-    specifier: ^1.60.0
-    version: 1.60.0
+    specifier: ^1.61.0
+    version: 1.61.0
   superjson:
     specifier: 1.12.2
     version: 1.12.2
@@ -2686,7 +2686,7 @@ packages:
       '@trpc/client': 10.19.1(@trpc/server@10.19.1)
       '@trpc/react-query': 10.19.1(@tanstack/react-query@4.28.0)(@trpc/client@10.19.1)(@trpc/server@10.19.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.19.1
-      next: 13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.60.0)
+      next: 13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.61.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -4739,7 +4739,7 @@ packages:
       '@panva/hkdf': 1.0.2
       cookie: 0.5.0
       jose: 4.13.1
-      next: 13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.60.0)
+      next: 13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.61.0)
       nodemailer: 6.9.1
       oauth: 0.9.15
       openid-client: 5.4.0
@@ -4750,7 +4750,7 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next@13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.60.0):
+  /next@13.3.0(react-dom@18.2.0)(react@18.2.0)(sass@1.61.0):
     resolution: {integrity: sha512-OVTw8MpIPa12+DCUkPqRGPS3thlJPcwae2ZL4xti3iBff27goH024xy4q2lhlsdoYiKOi8Kz6uJoLW/GXwgfOA==}
     engines: {node: '>=14.6.0'}
     hasBin: true
@@ -4778,7 +4778,7 @@ packages:
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      sass: 1.60.0
+      sass: 1.61.0
       styled-jsx: 5.1.1(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 13.3.0
@@ -5476,9 +5476,9 @@ packages:
       is-regex: 1.1.4
     dev: true
 
-  /sass@1.60.0:
-    resolution: {integrity: sha512-updbwW6fNb5gGm8qMXzVO7V4sWf7LMXnMly/JEyfbfERbVH46Fn6q02BX7/eHTdKpE7d+oTkMMQpFWNUMfFbgQ==}
-    engines: {node: '>=12.0.0'}
+  /sass@1.61.0:
+    resolution: {integrity: sha512-PDsN7BrVkNZK2+dj/dpKQAWZavbAQ87IXqVvw2+oEYI+GwlTWkvbQtL7F2cCNbMqJEYKPh1EcjSxsnqIb/kyaQ==}
+    engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       chokidar: 3.5.3
