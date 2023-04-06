@@ -130,12 +130,12 @@ const CreateCocktailForm = () => {
 
   const onSubmit: SubmitHandler<FormSchema> = async (data: FormSchema) => {
     if (!data.image) return;
-    const image = data.image;
+    const file = data.image;
 
     try {
       const presigned = (await createPresignedUrl.mutateAsync({
-        fileName: image.name,
-        fileType: image.type,
+        fileName: file.name,
+        fileType: file.type,
       })) as PresignedPost;
       const { url, fields } = presigned;
 
@@ -143,7 +143,7 @@ const CreateCocktailForm = () => {
 
       const formData = new FormData();
 
-      Object.entries({ ...fields, file: image }).forEach(([key, value]) => {
+      Object.entries({ ...fields, file }).forEach(([key, value]) => {
         formData.append(key, value as string | Blob);
       });
 
