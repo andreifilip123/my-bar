@@ -317,6 +317,7 @@ const CreateCocktailForm = () => {
             columns={4}
             key={garnish.id}
             templateColumns="auto 1fr 1fr auto"
+            gap={2}
           >
             <Controller
               name={`garnishes.${index}.amount`}
