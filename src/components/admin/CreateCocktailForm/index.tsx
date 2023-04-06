@@ -401,9 +401,7 @@ const CreateCocktailForm = () => {
         <Controller
           name="image"
           control={control}
-          render={({ field }) => (
-            <Dropzone {...field} onFileAccepted={field.onChange} />
-          )}
+          render={({ field }) => <Dropzone onFileAccepted={field.onChange} />}
         />
       </Center>
 
