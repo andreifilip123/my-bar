@@ -13,10 +13,10 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import type { FC } from "react";
-import type { ParsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
-import { api } from "../../utils/api";
+import type { ParsedCocktailRecipe } from "../../../../types/ParsedCocktailRecipe";
+import { api } from "../../../../utils/api";
 
-const index: FC<{
+const RobotCocktailCard: FC<{
   recipe: ParsedCocktailRecipe;
   onSelect?: () => void;
   image?: string;
@@ -86,4 +86,4 @@ const index: FC<{
   );
 };
 
-export default index;
+export default RobotCocktailCard;

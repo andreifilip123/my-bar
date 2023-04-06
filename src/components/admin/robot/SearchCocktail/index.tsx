@@ -9,39 +9,38 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import JSON5 from "json5";
-import type { NextPage } from "next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import RobotParsedCocktail from "../../components/RobotParsedCocktail";
-import { useRobotContext } from "../../contexts/useRobotContext";
-import type { ParsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
-import { parsedCocktailRecipe } from "../../types/ParsedCocktailRecipe";
+import { useRobotContext } from "../../../../contexts/useRobotContext";
+import type { ParsedCocktailRecipe } from "../../../../types/ParsedCocktailRecipe";
+import { parsedCocktailRecipe } from "../../../../types/ParsedCocktailRecipe";
+import RobotCocktailCard from "../RobotCocktailCard";
 
-import { api } from "../../utils/api";
+import { api } from "../../../../utils/api";
 
 const formSchema = z.object({
   cocktailName: z.string(),
   numberOfVariants: z.number(),
 });
 
-type IFormInputs = z.infer<typeof formSchema>;
+type FormSchema = z.infer<typeof formSchema>;
 
-const Robot: NextPage = () => {
+const SearchCocktail = () => {
   const { setCurrentStep, setCocktailRecipe } = useRobotContext();
   const getCocktailRecipe = api.robot.getCocktailRecipe.useMutation();
 
   const [results, setResults] = useState<ParsedCocktailRecipe[]>([]);
   const [selectedResult, setSelectedResult] = useState<ParsedCocktailRecipe>();
 
-  const { register, handleSubmit } = useForm<IFormInputs>({
+  const { register, handleSubmit } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       numberOfVariants: 3,
     },
   });
 
-  const onSubmit = async (data: IFormInputs) => {
+  const onSubmit = async (data: FormSchema) => {
     const versions = await Promise.all(
       Array.from({ length: data.numberOfVariants }, () =>
         getCocktailRecipe.mutateAsync({ cocktailName: data.cocktailName }),
@@ -86,7 +85,7 @@ const Robot: NextPage = () => {
       {results.length && !selectedResult ? (
         <Flex gap="4" mt={10} flexWrap="wrap">
           {results.map((result, index) => (
-            <RobotParsedCocktail
+            <RobotCocktailCard
               key={index}
               recipe={result}
               onSelect={() => setSelectedResult(result)}
@@ -97,7 +96,7 @@ const Robot: NextPage = () => {
 
       {selectedResult ? (
         <>
-          <RobotParsedCocktail recipe={selectedResult} />
+          <RobotCocktailCard recipe={selectedResult} />
           <Flex gap={5} margin={5}>
             <Button onClick={() => setSelectedResult(undefined)}>Back</Button>
             <Button
@@ -115,4 +114,4 @@ const Robot: NextPage = () => {
   );
 };
 
-export default Robot;
+export default SearchCocktail;

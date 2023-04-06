@@ -16,7 +16,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { PresignedPost } from "aws-sdk/clients/s3";
 import { Fragment, useMemo } from "react";
-import type { SubmitHandler } from "react-hook-form";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Creatable from "react-select/creatable";
 import z from "zod";
@@ -128,7 +127,7 @@ const CreateCocktailForm = () => {
     }
   }, [imageList]);
 
-  const onSubmit: SubmitHandler<FormSchema> = async (data: FormSchema) => {
+  const onSubmit = async (data: FormSchema) => {
     if (!data.image) return;
     const file = data.image;
 

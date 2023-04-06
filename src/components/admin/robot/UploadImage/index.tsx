@@ -2,12 +2,11 @@ import { Flex, Heading, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { PresignedPost } from "aws-sdk/clients/s3";
 import type { NextPage } from "next";
-import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { useRobotContext } from "../../contexts/useRobotContext";
+import { useRobotContext } from "../../../../contexts/useRobotContext";
 
-import { api } from "../../utils/api";
+import { api } from "../../../../utils/api";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -29,7 +28,7 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const Admin: NextPage = () => {
+const UploadImage: NextPage = () => {
   const { setImage, setCurrentStep } = useRobotContext();
 
   const createPresignedUrl = api.aws.createPresignedUrl.useMutation();
@@ -38,7 +37,7 @@ const Admin: NextPage = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit: SubmitHandler<FormSchema> = async (data: FormSchema) => {
+  const onSubmit = async (data: FormSchema) => {
     if (!data.image) return;
     const file = data.image;
 
@@ -83,4 +82,4 @@ const Admin: NextPage = () => {
   );
 };
 
-export default Admin;
+export default UploadImage;

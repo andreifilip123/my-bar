@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/react";
 import type { FC } from "react";
-import { useCountdown } from "../../utils/hooks/useCountdown";
+import { useCountdown } from "../../../utils/hooks/useCountdown";
 
 interface Props {
   targetDate: Date;

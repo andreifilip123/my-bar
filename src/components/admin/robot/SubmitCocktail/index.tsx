@@ -1,11 +1,11 @@
 import { Button, Flex, Heading } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { useRobotContext } from "../../contexts/useRobotContext";
-import RobotParsedCocktail from "../RobotParsedCocktail";
+import { useRobotContext } from "../../../../contexts/useRobotContext";
+import RobotCocktailCard from "../RobotCocktailCard";
 
-import { api } from "../../utils/api";
+import { api } from "../../../../utils/api";
 
-const Admin: NextPage = () => {
+const SubmitCocktail: NextPage = () => {
   const { cocktailRecipe, image } = useRobotContext();
 
   const createCocktail = api.cocktail.create.useMutation();
@@ -26,11 +26,11 @@ const Admin: NextPage = () => {
 
   return (
     <Flex>
-      <RobotParsedCocktail recipe={cocktailRecipe} image={image} />
+      <RobotCocktailCard recipe={cocktailRecipe} image={image} />
       <Heading>If this looks good, submit it!</Heading>
       <Button onClick={() => onSubmit()}>Submit</Button>
     </Flex>
   );
 };
 
-export default Admin;
+export default SubmitCocktail;

@@ -1,5 +1,5 @@
 import { HStack } from "@chakra-ui/react";
-import CocktailCard from "../components/CocktailCard";
+import CocktailCard from "../components/cocktails/CocktailCard";
 import { api } from "../utils/api";
 
 const Cocktails = () => {

@@ -1,6 +1,6 @@
 import { AspectRatio, Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
-import type { CocktailWithIngredients } from "../../types/Cocktail";
-import { api } from "../../utils/api";
+import type { CocktailWithIngredients } from "../../../types/Cocktail";
+import { api } from "../../../utils/api";
 import CocktailModal from "../CocktailModal";
 
 const CocktailCard = (cocktail: CocktailWithIngredients) => {
