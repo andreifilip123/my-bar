@@ -2,11 +2,12 @@ import { Flex, Heading, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { PresignedPost } from "aws-sdk/clients/s3";
 import type { NextPage } from "next";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { useRobotContext } from "../../../../contexts/useRobotContext";
 
 import { api } from "../../../../utils/api";
+import Dropzone from "../../Dropzone";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -33,7 +34,7 @@ const UploadImage: NextPage = () => {
 
   const createPresignedUrl = api.aws.createPresignedUrl.useMutation();
 
-  const { register, handleSubmit } = useForm<FormSchema>({
+  const { handleSubmit, control } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
@@ -74,7 +75,13 @@ const UploadImage: NextPage = () => {
         Upload an image
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="file" multiple={false} {...register("image")} />
+        <Controller
+          name="image"
+          control={control}
+          render={({ field }) => (
+            <Dropzone {...field} onFileAccepted={field.onChange} />
+          )}
+        />
 
         <Input type="submit" mt={5} />
       </form>

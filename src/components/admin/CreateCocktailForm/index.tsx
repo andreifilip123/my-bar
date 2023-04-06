@@ -1,9 +1,9 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   Heading,
-  Image,
   Input,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -15,11 +15,12 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { PresignedPost } from "aws-sdk/clients/s3";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Creatable from "react-select/creatable";
 import z from "zod";
 import { api } from "../../../utils/api";
+import Dropzone from "../Dropzone";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -83,7 +84,7 @@ const CreateCocktailForm = () => {
   const createCocktail = api.cocktail.create.useMutation();
   const createPresignedUrl = api.aws.createPresignedUrl.useMutation();
 
-  const { register, handleSubmit, control, formState, reset, setValue, watch } =
+  const { register, handleSubmit, control, formState, reset, setValue } =
     useForm<FormSchema>({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -114,18 +115,6 @@ const CreateCocktailForm = () => {
     control,
     name: "garnishes",
   });
-
-  const imageList = watch("image", undefined) as unknown as
-    | FileList
-    | undefined;
-
-  const imageUrl = useMemo(() => {
-    const image = imageList?.item(0);
-
-    if (image) {
-      return URL.createObjectURL(image);
-    }
-  }, [imageList]);
 
   const onSubmit = async (data: FormSchema) => {
     if (!data.image) return;
@@ -407,9 +396,15 @@ const CreateCocktailForm = () => {
         Image:
       </Heading>
 
-      <Input type="file" multiple={false} {...register("image")} />
-
-      {imageUrl ? <Image src={imageUrl} alt={"Preview of your image"} /> : null}
+      <Center>
+        <Controller
+          name="image"
+          control={control}
+          render={({ field }) => (
+            <Dropzone {...field} onFileAccepted={field.onChange} />
+          )}
+        />
+      </Center>
 
       <Input type="submit" my={2} />
     </Box>
