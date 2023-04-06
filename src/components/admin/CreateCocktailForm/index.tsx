@@ -1,3 +1,4 @@
+import type { PresignedPost } from "@aws-sdk/s3-presigned-post";
 import {
   Box,
   Button,
@@ -14,7 +15,6 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { PresignedPost } from "aws-sdk/clients/s3";
 import { Fragment } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Creatable from "react-select/creatable";
@@ -317,6 +317,7 @@ const CreateCocktailForm = () => {
             columns={4}
             key={garnish.id}
             templateColumns="auto 1fr 1fr auto"
+            gap={2}
           >
             <Controller
               name={`garnishes.${index}.amount`}
@@ -400,9 +401,7 @@ const CreateCocktailForm = () => {
         <Controller
           name="image"
           control={control}
-          render={({ field }) => (
-            <Dropzone {...field} onFileAccepted={field.onChange} />
-          )}
+          render={({ field }) => <Dropzone onFileAccepted={field.onChange} />}
         />
       </Center>
 
