@@ -10,6 +10,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.306.0",
+    "@aws-sdk/s3-presigned-post": "^3.306.0",
+    "@aws-sdk/s3-request-presigner": "^3.306.0",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
@@ -23,7 +26,6 @@
     "@trpc/server": "^10.19.1",
     "@types/nodemailer": "^6.4.7",
     "@vercel/analytics": "^0.1.11",
-    "aws-sdk": "^2.1352.0",
     "framer-motion": "^10.11.2",
     "json5": "^2.2.3",
     "next": "13.3.0",

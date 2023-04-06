@@ -1,6 +1,6 @@
+import type { PresignedPost } from "@aws-sdk/s3-presigned-post";
 import { Flex, Heading, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { PresignedPost } from "aws-sdk/clients/s3";
 import type { NextPage } from "next";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
