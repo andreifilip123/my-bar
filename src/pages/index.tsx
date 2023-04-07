@@ -9,6 +9,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Flex, Text } from "@chakra-ui/react";
 import { api } from "../utils/api";
 
 const Home: NextPage = () => {
@@ -77,15 +78,13 @@ const AuthShowcase: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {user && secretMessage && (
-          <span>
-            Logged in as {user.fullName} - {secretMessage}
-          </span>
-        )}
-      </p>
+    <Flex flexDir="column">
+      {user?.fullName && secretMessage && (
+        <Text color="white">
+          {`Logged in as ${user.fullName} - ${secretMessage}`}
+        </Text>
+      )}
       {isSignedIn ? <SignOutButton /> : <SignInButton />}
-    </div>
+    </Flex>
   );
 };
