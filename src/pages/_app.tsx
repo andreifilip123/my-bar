@@ -1,23 +1,19 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 
 import { api } from "../utils/api";
 
 import "../styles/globals.css";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => (
-  <SessionProvider session={session}>
+const MyApp: AppType = ({ Component, pageProps }) => (
+  <ClerkProvider {...pageProps}>
     <ChakraProvider>
       <Component {...pageProps} />
       <Analytics />
     </ChakraProvider>
-  </SessionProvider>
+  </ClerkProvider>
 );
 
 export default api.withTRPC(MyApp);

@@ -8,26 +8,12 @@ import { z } from "zod";
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
-  NEXTAUTH_SECRET:
-    process.env.NODE_ENV === "production"
-      ? z.string().min(1)
-      : z.string().min(1).optional(),
-  NEXTAUTH_URL: z.preprocess(
-    // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
-    // Since NextAuth.js automatically uses the VERCEL_URL if present.
-    (str) => process.env.VERCEL_URL ?? str,
-    // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-    process.env.VERCEL ? z.string() : z.string().url(),
-  ),
-  GITHUB_CLIENT_ID: z.string(),
-  GITHUB_CLIENT_SECRET: z.string(),
+  CLERK_SECRET_KEY: z.string(),
   BUCKET_NAME: z.string(),
   REGION: z.string(),
   ACCESS_KEY: z.string(),
   SECRET_ACCESS_KEY: z.string(),
   OPENAI_API_KEY: z.string(),
-  EMAIL_SERVER: z.string(),
-  EMAIL_FROM: z.string(),
 });
 
 /**
@@ -38,17 +24,12 @@ export const serverSchema = z.object({
 export const serverEnv = {
   DATABASE_URL: process.env.DATABASE_URL,
   NODE_ENV: process.env.NODE_ENV,
-  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-  NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-  GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
   BUCKET_NAME: process.env.BUCKET_NAME,
   REGION: process.env.REGION,
   ACCESS_KEY: process.env.ACCESS_KEY,
   SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  EMAIL_SERVER: process.env.EMAIL_SERVER,
-  EMAIL_FROM: process.env.EMAIL_FROM,
 };
 
 /**
@@ -59,6 +40,7 @@ export const serverEnv = {
 export const clientSchema = z.object({
   // NEXT_PUBLIC_CLIENTVAR: z.string(),
   NEXT_PUBLIC_TARGET_DATE: z.string().datetime().optional(),
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
 });
 
 /**
@@ -70,4 +52,6 @@ export const clientSchema = z.object({
 export const clientEnv = {
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   NEXT_PUBLIC_TARGET_DATE: process.env.NEXT_PUBLIC_TARGET_DATE,
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
 };
