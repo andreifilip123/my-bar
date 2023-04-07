@@ -10,7 +10,13 @@ import { z } from "zod";
 import { serverEnv } from "../../../env/schema.mjs";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-const s3 = new S3Client({ region: serverEnv.REGION });
+const s3 = new S3Client({
+  region: serverEnv.REGION,
+  credentials: {
+    accessKeyId: serverEnv.ACCESS_KEY ?? "",
+    secretAccessKey: serverEnv.SECRET_ACCESS_KEY ?? "",
+  },
+});
 
 export const awsRouter = createTRPCRouter({
   createPresignedUrl: protectedProcedure
