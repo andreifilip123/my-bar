@@ -2,7 +2,14 @@ import { getAuth, withClerkMiddleware } from "@clerk/nextjs/server";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const publicPaths = ["/", "/login*", "/signup*", "/api/trpc/example*"];
+const publicPaths = [
+  "/",
+  "/api/trpc/example*",
+  "/login*",
+  "/signup*",
+  "/cocktails",
+  "/cocktail-of-the-week",
+];
 
 const isPublic = (path: string) => {
   return publicPaths.find((x) =>
