@@ -21,9 +21,7 @@ export const awsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.session) throw new Error("Not authenticated");
-
-      const userId = ctx.session.user.id;
+      const userId = ctx.auth.userId;
 
       const image = await ctx.prisma.image.create({
         data: {
