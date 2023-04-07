@@ -156,6 +156,9 @@ export const cocktailRouter = createTRPCRouter({
         where: {
           id: cocktail.id,
         },
+        include: {
+          image: true,
+        },
       });
     }),
 
