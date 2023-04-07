@@ -84,8 +84,8 @@ const AuthShowcase: React.FC = () => {
             Logged in as {user.fullName} - {secretMessage}
           </span>
         )}
-        {isSignedIn ? <SignOutButton /> : <SignInButton />}
       </p>
+      {isSignedIn ? <SignOutButton /> : <SignInButton />}
     </div>
   );
 };
