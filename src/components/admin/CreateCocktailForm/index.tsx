@@ -28,9 +28,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const formSchema = z.object({
   name: z.string(),
   image: z
-    .custom<FileList>()
-    .refine((file) => file?.length == 1, "Image is required.")
-    .transform(([file]) => file)
+    .custom<File>()
     .refine(
       (file) => file?.size && file?.size <= MAX_FILE_SIZE,
       `Max image size is 10MB.`,
