@@ -11,7 +11,6 @@ datasource db {
 model Image {
     id       String    @id @default(cuid())
     cocktail Cocktail?
-    user     User?     @relation(fields: [userId], references: [id])
     userId   String?
 
     @@index([userId])
@@ -28,7 +27,6 @@ model Cocktail {
     iceId               String
     image               Image?       @relation(fields: [imageId], references: [id])
     imageId             String       @unique
-    user                User?        @relation(fields: [userId], references: [id])
     userId              String?
     isCocktailOfTheWeek Boolean      @default(false)
 
@@ -77,55 +75,4 @@ model Ice {
     createdAt DateTime   @default(now())
     updatedAt DateTime   @updatedAt
     cocktail  Cocktail[]
-}
-
-// Necessary for Next auth
-model Account {
-    id                       String  @id @default(cuid())
-    userId                   String
-    type                     String
-    provider                 String
-    providerAccountId        String
-    refresh_token            String?
-    refresh_token_expires_in Int?
-    access_token             String?
-    expires_at               Int?
-    token_type               String?
-    scope                    String?
-    id_token                 String?
-    session_state            String?
-    user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-    @@index([userId])
-}
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@index([userId])
-}
-
-model User {
-    id             String     @id @default(cuid())
-    name           String?
-    email          String?    @unique
-    emailVerified  DateTime?
-    image          String?
-    accounts       Account[]
-    sessions       Session[]
-    cocktails      Cocktail[]
-    uploadedImages Image[]
-}
-
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
 }
