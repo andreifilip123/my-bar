@@ -10,7 +10,13 @@ import { z } from "zod";
 import { serverEnv } from "../../../env/schema.mjs";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-const s3 = new S3Client({ region: serverEnv.REGION });
+const s3 = new S3Client({
+  region: serverEnv.REGION,
+  credentials: {
+    accessKeyId: serverEnv.ACCESS_KEY ?? "",
+    secretAccessKey: serverEnv.SECRET_ACCESS_KEY ?? "",
+  },
+});
 
 export const awsRouter = createTRPCRouter({
   createPresignedUrl: protectedProcedure
@@ -55,9 +61,7 @@ export const awsRouter = createTRPCRouter({
   getSignedUrl: publicProcedure
     .input(z.object({ imageKey: z.string() }))
     .query(async ({ input }) => {
-      console.log("getSignedUrl", input);
       if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
-      console.log("BUCKET_NAME", serverEnv.BUCKET_NAME);
 
       const command = new GetObjectCommand({
         Bucket: serverEnv.BUCKET_NAME,
