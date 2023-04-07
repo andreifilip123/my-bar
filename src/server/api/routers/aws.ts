@@ -67,9 +67,7 @@ export const awsRouter = createTRPCRouter({
         Bucket: serverEnv.BUCKET_NAME,
         Key: input.imageKey,
       });
-      console.log("command", command);
       const url = await awsGetSignedUrl(s3, command, { expiresIn: 15 * 60 }); // expires in seconds
-      console.log("url", url);
 
       return url;
     }),
