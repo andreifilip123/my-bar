@@ -27,7 +27,13 @@ const Home: NextPage = () => {
           <UserButton />
         </div>
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <Image src="/cocktail.png" alt="Cocktail" width={200} height={200} />
+          <Image
+            src="/cocktail.png"
+            alt="Cocktail"
+            width={200}
+            height={200}
+            priority
+          />
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
           </h1>
