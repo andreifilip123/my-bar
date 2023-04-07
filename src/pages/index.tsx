@@ -9,7 +9,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { api } from "../utils/api";
 
 const Home: NextPage = () => {
@@ -78,13 +78,23 @@ const AuthShowcase: React.FC = () => {
   );
 
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" gap={4}>
       {user?.fullName && secretMessage && (
         <Text color="white">
           {`Logged in as ${user.fullName} - ${secretMessage}`}
         </Text>
       )}
-      {isSignedIn ? <SignOutButton /> : <SignInButton />}
+      <Flex justifyContent="center">
+        {isSignedIn ? (
+          <SignOutButton>
+            <Button colorScheme="purple">Logout</Button>
+          </SignOutButton>
+        ) : (
+          <SignInButton>
+            <Button colorScheme="purple">Login</Button>
+          </SignInButton>
+        )}
+      </Flex>
     </Flex>
   );
 };
