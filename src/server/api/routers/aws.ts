@@ -55,13 +55,17 @@ export const awsRouter = createTRPCRouter({
   getSignedUrl: publicProcedure
     .input(z.object({ imageKey: z.string() }))
     .query(async ({ input }) => {
+      console.log("getSignedUrl", input);
       if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
+      console.log("BUCKET_NAME", serverEnv.BUCKET_NAME);
 
       const command = new GetObjectCommand({
         Bucket: serverEnv.BUCKET_NAME,
         Key: input.imageKey,
       });
+      console.log("command", command);
       const url = await awsGetSignedUrl(s3, command, { expiresIn: 15 * 60 }); // expires in seconds
+      console.log("url", url);
 
       return url;
     }),
