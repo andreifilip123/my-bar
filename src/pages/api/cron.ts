@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-s3";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { PrismaClient } from "@prisma/client";
 import { serverEnv } from "../../env/schema.mjs";
 
 const s3 = new S3Client({
@@ -27,6 +28,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  const prisma = new PrismaClient({
+    log: serverEnv.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  });
   if (!prisma) {
     res.status(500).end("Prisma not initialized");
     return;
