@@ -9,6 +9,7 @@ const publicPaths = [
   "/signup*",
   "/cocktails",
   "/cocktail-of-the-week",
+  "/api/cron",
 ];
 
 const isPublic = (path: string) => {
