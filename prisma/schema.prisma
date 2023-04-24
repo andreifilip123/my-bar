@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["jsonProtocol"]
 }
 
@@ -94,53 +94,4 @@ model CocktailToIngredient {
   @@unique([A, B], map: "_CocktailToIngredient_AB_unique")
   @@index([B], map: "_CocktailToIngredient_B_index")
   @@map("_CocktailToIngredient")
-}
-
-model vt_HOLD_0153ab6d5ba05cbb8c60d04f384315f8_20230408123434 {
-  id           String   @id
-  sessionToken String   @unique(map: "Session_sessionToken_key")
-  userId       String
-  expires      DateTime
-
-  @@index([userId], map: "Session_userId_idx")
-  @@map("_vt_HOLD_0153ab6d5ba05cbb8c60d04f384315f8_20230408123434")
-}
-
-model vt_HOLD_2f508f638f0b527680fdf027f9a3415a_20230408123430 {
-  id                       String  @id
-  userId                   String
-  type                     String
-  provider                 String
-  providerAccountId        String
-  refresh_token            String?
-  refresh_token_expires_in Int?
-  access_token             String?
-  expires_at               Int?
-  token_type               String?
-  scope                    String?
-  id_token                 String?
-  session_state            String?
-
-  @@unique([provider, providerAccountId], map: "Account_provider_providerAccountId_key")
-  @@index([userId], map: "Account_userId_idx")
-  @@map("_vt_HOLD_2f508f638f0b527680fdf027f9a3415a_20230408123430")
-}
-
-model vt_HOLD_3ddac3d9b9745596847d092feb6b51e7_20230408123436 {
-  identifier String
-  token      String   @unique(map: "VerificationToken_token_key")
-  expires    DateTime
-
-  @@unique([identifier, token], map: "VerificationToken_identifier_token_key")
-  @@map("_vt_HOLD_3ddac3d9b9745596847d092feb6b51e7_20230408123436")
-}
-
-model vt_HOLD_a837a7a5154b5f26a002f69fe18d0b92_20230408123435 {
-  id            String    @id
-  name          String?
-  email         String?   @unique(map: "User_email_key")
-  emailVerified DateTime?
-  image         String?
-
-  @@map("_vt_HOLD_a837a7a5154b5f26a002f69fe18d0b92_20230408123435")
 }
