@@ -3,6 +3,13 @@ generator client {
   previewFeatures = ["jsonProtocol"]
 }
 
+generator kysely {
+  provider = "prisma-kysely"
+
+  output   = "../src/server/db"
+  fileName = "types.ts"
+}
+
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
