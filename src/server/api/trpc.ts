@@ -18,7 +18,7 @@
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 
-import { prisma } from "../db";
+import { db, prisma } from "../db";
 
 import type {
   SignedInAuthObject,
@@ -43,6 +43,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     auth: opts.auth,
     prisma,
+    db,
   };
 };
 
