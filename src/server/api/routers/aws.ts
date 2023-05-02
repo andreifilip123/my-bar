@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { getSignedUrl as awsGetSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
 import { serverEnv } from "../../../env/schema.mjs";
@@ -28,12 +29,18 @@ export const awsRouter = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       const userId = ctx.auth.userId;
+      const id = createId();
 
-      const image = await ctx.prisma.image.create({
-        data: {
+      const image = await ctx.db
+        .insertInto("Image")
+        .values({
+          id,
           userId,
-        },
-      });
+        })
+        .returning("id")
+        .executeTakeFirst();
+
+      if (!image) throw new Error("Could not create image");
 
       return new Promise(async (resolve, reject) => {
         try {

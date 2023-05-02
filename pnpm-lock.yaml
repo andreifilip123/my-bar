@@ -28,6 +28,9 @@ dependencies:
   '@next/bundle-analyzer':
     specifier: ^13.3.0
     version: 13.3.0
+  '@paralleldrive/cuid2':
+    specifier: ^2.2.0
+    version: 2.2.0
   '@planetscale/database':
     specifier: ^1.7.0
     version: 1.7.0
@@ -2653,6 +2656,10 @@ packages:
     dev: false
     optional: true
 
+  /@noble/hashes@1.3.0:
+    resolution: {integrity: sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==}
+    dev: false
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2670,6 +2677,12 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+
+  /@paralleldrive/cuid2@2.2.0:
+    resolution: {integrity: sha512-CVQDpPIUHrUGGLdrMGz1NmqZvqmsB2j2rCIQEu1EvxWjlFh4fhvEGmgR409cY20/67/WlJsggenq0no3p3kYsw==}
+    dependencies:
+      '@noble/hashes': 1.3.0
+    dev: false
 
   /@peculiar/asn1-schema@2.3.6:
     resolution: {integrity: sha512-izNRxPoaeJeg/AyH8hER6s+H7p4itk+03QCa4sbxI3lNdseQYCuxzgsuNK8bTXChtLTjpJz6NmXKA73qLa3rCA==}
