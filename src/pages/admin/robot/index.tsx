@@ -1,14 +1,14 @@
 import { Box, Center, Flex, Heading, Link, Progress } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useState } from "react";
-import SearchCocktail from "../../../components/admin/robot/SearchCocktail";
-import SubmitCocktail from "../../../components/admin/robot/SubmitCocktail";
-import UploadImage from "../../../components/admin/robot/UploadImage";
-import type { RobotStep } from "../../../contexts/useRobotContext";
-import { RobotContext } from "../../../contexts/useRobotContext";
-import type { ParsedCocktailRecipe } from "../../../types/ParsedCocktailRecipe";
 
-import { api } from "../../../utils/api";
+import SearchCocktail from "@/components/admin/robot/SearchCocktail";
+import SubmitCocktail from "@/components/admin/robot/SubmitCocktail";
+import UploadImage from "@/components/admin/robot/UploadImage";
+import type { RobotStep } from "@/contexts/useRobotContext";
+import { RobotContext } from "@/contexts/useRobotContext";
+import type { ParsedCocktailRecipe } from "@/types/ParsedCocktailRecipe";
+import { api } from "@/utils/api";
 
 const Robot: NextPage = () => {
   const { data: robotIsAlive, isLoading } = api.robot.isAlive.useQuery();

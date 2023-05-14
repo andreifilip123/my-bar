@@ -1,6 +1,7 @@
 import { HStack } from "@chakra-ui/react";
-import CocktailCard from "../components/cocktails/CocktailCard";
-import { api } from "../utils/api";
+
+import CocktailCard from "@/components/cocktails/CocktailCard";
+import { api } from "@/utils/api";
 
 const Cocktails = () => {
   const cocktails = api.cocktail.all.useQuery(undefined, {});

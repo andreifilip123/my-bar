@@ -1,3 +1,4 @@
+import { Button, Flex, Text } from "@chakra-ui/react";
 import {
   SignInButton,
   SignOutButton,
@@ -9,8 +10,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button, Flex, Text } from "@chakra-ui/react";
-import { api } from "../utils/api";
+import { api } from "@/utils/api";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });

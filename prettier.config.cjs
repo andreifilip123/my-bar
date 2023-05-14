@@ -1,5 +1,5 @@
 /** @type {import("prettier").Config} */
-module.exports = {
+const config = {
   plugins: [require.resolve("prettier-plugin-tailwindcss")],
   semi: true,
   trailingComma: "all",
@@ -8,3 +8,5 @@ module.exports = {
   bracketSpacing: true,
   bracketSameLine: false,
 };
+
+module.exports = config;

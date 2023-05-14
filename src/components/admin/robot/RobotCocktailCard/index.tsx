@@ -13,8 +13,9 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import type { FC } from "react";
-import type { ParsedCocktailRecipe } from "../../../../types/ParsedCocktailRecipe";
-import { api } from "../../../../utils/api";
+
+import type { ParsedCocktailRecipe } from "@/types/ParsedCocktailRecipe";
+import { api } from "@/utils/api";
 
 const RobotCocktailCard: FC<{
   recipe: ParsedCocktailRecipe;

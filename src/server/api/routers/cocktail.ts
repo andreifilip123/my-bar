@@ -1,7 +1,11 @@
 import z from "zod";
-import { parsedCocktailRecipe } from "../../../types/ParsedCocktailRecipe";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
+import { parsedCocktailRecipe } from "@/types/ParsedCocktailRecipe";
 
 export const cocktailRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) =>
