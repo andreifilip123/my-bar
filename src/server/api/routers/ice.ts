@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const iceRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => ctx.prisma.ice.findMany()),

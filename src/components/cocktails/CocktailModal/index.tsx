@@ -13,10 +13,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import type { FC } from "react";
-import type {
-  CocktailWithIngredients,
-  Ingredient,
-} from "../../../types/Cocktail";
+
+import type { CocktailWithIngredients, Ingredient } from "@/types/Cocktail";
 
 interface Props {
   isOpen: boolean;

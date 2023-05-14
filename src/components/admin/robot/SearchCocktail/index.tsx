@@ -12,12 +12,12 @@ import JSON5 from "json5";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { useRobotContext } from "../../../../contexts/useRobotContext";
-import type { ParsedCocktailRecipe } from "../../../../types/ParsedCocktailRecipe";
-import { parsedCocktailRecipe } from "../../../../types/ParsedCocktailRecipe";
-import RobotCocktailCard from "../RobotCocktailCard";
 
-import { api } from "../../../../utils/api";
+import RobotCocktailCard from "@/components/admin/robot/RobotCocktailCard";
+import { useRobotContext } from "@/contexts/useRobotContext";
+import type { ParsedCocktailRecipe } from "@/types/ParsedCocktailRecipe";
+import { parsedCocktailRecipe } from "@/types/ParsedCocktailRecipe";
+import { api } from "@/utils/api";
 
 const formSchema = z.object({
   cocktailName: z.string(),
@@ -65,7 +65,7 @@ const SearchCocktail = () => {
   return (
     <Center flexDir="column">
       <Box margin={5}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={void handleSubmit(onSubmit)}>
           <HStack>
             <Input placeholder="Cocktail name" {...register("cocktailName")} />
 

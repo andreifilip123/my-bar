@@ -7,14 +7,18 @@ import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { getSignedUrl as awsGetSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { z } from "zod";
 
-import { serverEnv } from "../../../env/schema.mjs";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { env } from "@/env.mjs";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 
 const s3 = new S3Client({
-  region: serverEnv.REGION,
+  region: env.REGION,
   credentials: {
-    accessKeyId: serverEnv.ACCESS_KEY ?? "",
-    secretAccessKey: serverEnv.SECRET_ACCESS_KEY ?? "",
+    accessKeyId: env.ACCESS_KEY,
+    secretAccessKey: env.SECRET_ACCESS_KEY,
   },
 });
 
@@ -35,36 +39,33 @@ export const awsRouter = createTRPCRouter({
         },
       });
 
-      return new Promise(async (resolve, reject) => {
-        try {
-          if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
-          const signedPost = await createPresignedPost(s3, {
-            Bucket: serverEnv.BUCKET_NAME,
-            Key: image.id,
-            Conditions: [
-              ["content-length-range", 0, 10 * 1024 * 1024], // up to 10 MB
-              ["starts-with", "$Content-Type", "image/"],
-            ],
-            Fields: {
-              key: image.id,
-              "Content-Type": input.fileType,
-            },
-            Expires: 60, // seconds
-          });
-          resolve(signedPost);
-        } catch (error) {
-          reject(error);
-        }
-      });
+      try {
+        const signedPost = await createPresignedPost(s3, {
+          Bucket: env.BUCKET_NAME,
+          Key: image.id,
+          Conditions: [
+            ["content-length-range", 0, 10 * 1024 * 1024], // up to 10 MB
+            ["starts-with", "$Content-Type", "image/"],
+          ],
+          Fields: {
+            key: image.id,
+            "Content-Type": input.fileType,
+          },
+          Expires: 60, // seconds
+        });
+        return signedPost;
+      } catch (error) {
+        console.error(error);
+      }
     }),
 
   getSignedUrl: publicProcedure
     .input(z.object({ imageKey: z.string() }))
     .query(async ({ input }) => {
-      if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
+      if (!env.BUCKET_NAME) throw new Error("No bucket name set");
 
       const command = new GetObjectCommand({
-        Bucket: serverEnv.BUCKET_NAME,
+        Bucket: env.BUCKET_NAME,
         Key: input.imageKey,
       });
       const url = await awsGetSignedUrl(s3, command, { expiresIn: 15 * 60 }); // expires in seconds
@@ -75,10 +76,8 @@ export const awsRouter = createTRPCRouter({
   deleteFromS3: protectedProcedure
     .input(z.object({ key: z.string() }))
     .mutation(async ({ input }) => {
-      if (!serverEnv.BUCKET_NAME) throw new Error("No bucket name set");
-
       const command = new DeleteObjectCommand({
-        Bucket: serverEnv.BUCKET_NAME,
+        Bucket: env.BUCKET_NAME,
         Key: input.key,
       });
       await s3.send(command);

@@ -1,13 +1,12 @@
-import type { PresignedPost } from "@aws-sdk/s3-presigned-post";
+import { useRobotContext } from "@/contexts/useRobotContext";
 import { Flex, Heading, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { NextPage } from "next";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
-import { useRobotContext } from "../../../../contexts/useRobotContext";
 
-import { api } from "../../../../utils/api";
-import Dropzone from "../../Dropzone";
+import Dropzone from "@/components/admin/Dropzone";
+import { api } from "@/utils/api";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -43,10 +42,13 @@ const UploadImage: NextPage = () => {
     const file = data.image;
 
     try {
-      const presigned = (await createPresignedUrl.mutateAsync({
+      const presigned = await createPresignedUrl.mutateAsync({
         fileName: file.name,
         fileType: file.type,
-      })) as PresignedPost;
+      });
+
+      if (!presigned) return;
+
       const { url, fields } = presigned;
 
       const imageKey = fields.key as string;
@@ -74,7 +76,7 @@ const UploadImage: NextPage = () => {
       <Heading size="md" mb={5}>
         Upload an image
       </Heading>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={void handleSubmit(onSubmit)}>
         <Controller
           name="image"
           control={control}

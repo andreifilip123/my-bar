@@ -2,18 +2,19 @@ import { Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
-import CountdownTimer from "../components/cocktail-of-the-week/CountdownTimer";
-import Spotlight from "../components/cocktail-of-the-week/Spotlight";
-import CocktailCard from "../components/cocktails/CocktailCard";
-import { clientEnv } from "../env/schema.mjs";
-import { api } from "../utils/api";
-import useWindowDimensions from "../utils/hooks/useWindowDimensions";
+
+import CountdownTimer from "@/components/cocktail-of-the-week/CountdownTimer";
+import Spotlight from "@/components/cocktail-of-the-week/Spotlight";
+import CocktailCard from "@/components/cocktails/CocktailCard";
+import { env } from "@/env.mjs";
+import { api } from "@/utils/api";
+import useWindowDimensions from "@/utils/hooks/useWindowDimensions";
 
 const CocktailOfTheWeek = () => {
   const { width, height } = useWindowDimensions();
   let targetDate;
-  if (clientEnv.NEXT_PUBLIC_TARGET_DATE) {
-    targetDate = new Date(clientEnv.NEXT_PUBLIC_TARGET_DATE);
+  if (env.NEXT_PUBLIC_TARGET_DATE) {
+    targetDate = new Date(env.NEXT_PUBLIC_TARGET_DATE);
   } else {
     // if no date is set, use the next thursday at 20:00
     targetDate = new Date();

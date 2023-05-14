@@ -1,5 +1,6 @@
 import { Center, Heading } from "@chakra-ui/react";
-import CreateCocktailForm from "../../components/admin/CreateCocktailForm";
+
+import CreateCocktailForm from "@/components/admin/CreateCocktailForm";
 
 const Create = () => {
   return (

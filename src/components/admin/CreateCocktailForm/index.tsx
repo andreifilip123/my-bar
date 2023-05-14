@@ -1,4 +1,3 @@
-import type { PresignedPost } from "@aws-sdk/s3-presigned-post";
 import {
   Box,
   Button,
@@ -19,8 +18,9 @@ import { Fragment } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Creatable from "react-select/creatable";
 import z from "zod";
-import { api } from "../../../utils/api";
-import Dropzone from "../Dropzone";
+
+import Dropzone from "@/components/admin/Dropzone";
+import { api } from "@/utils/api";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -119,10 +119,13 @@ const CreateCocktailForm = () => {
     const file = data.image;
 
     try {
-      const presigned = (await createPresignedUrl.mutateAsync({
+      const presigned = await createPresignedUrl.mutateAsync({
         fileName: file.name,
         fileType: file.type,
-      })) as PresignedPost;
+      });
+
+      if (!presigned) return;
+
       const { url, fields } = presigned;
 
       const imageKey = fields.key as string;
@@ -180,7 +183,7 @@ const CreateCocktailForm = () => {
   };
 
   return (
-    <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+    <Box as="form" onSubmit={void handleSubmit(onSubmit)}>
       <Input placeholder="Cocktail name" {...register("name")} />
       <p className="text-red-600">{formState.errors.name?.message}</p>
 

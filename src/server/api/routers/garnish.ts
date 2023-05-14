@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const garnishRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => ctx.prisma.garnish.findMany()),

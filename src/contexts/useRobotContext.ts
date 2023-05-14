@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { ParsedCocktailRecipe } from "../types/ParsedCocktailRecipe";
+import type { ParsedCocktailRecipe } from "@/types/ParsedCocktailRecipe";
 
 export type RobotStep = "searchCocktail" | "uploadImage" | "submitCocktail";
 

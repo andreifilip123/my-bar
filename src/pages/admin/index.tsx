@@ -21,9 +21,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import CreateCocktailForm from "../../components/admin/CreateCocktailForm";
 
-import { api } from "../../utils/api";
+import CreateCocktailForm from "@/components/admin/CreateCocktailForm";
+import { api } from "@/utils/api";
 
 const Admin: NextPage = () => {
   const { data: cocktails, refetch } = api.cocktail.all.useQuery(undefined, {});
@@ -65,9 +65,9 @@ const Admin: NextPage = () => {
                       <Button
                         variant="ghost"
                         onClick={() =>
-                          setCocktailOfTheWeek.mutateAsync(
+                          void setCocktailOfTheWeek.mutateAsync(
                             { name: cocktail.name },
-                            { onSuccess: async () => await refetch() },
+                            { onSuccess: () => void refetch() },
                           )
                         }
                       >
@@ -80,9 +80,9 @@ const Admin: NextPage = () => {
                       <Button
                         variant="ghost"
                         onClick={() =>
-                          deleteCocktail.mutateAsync(
+                          void deleteCocktail.mutateAsync(
                             { name: cocktail.name },
-                            { onSuccess: async () => await refetch() },
+                            { onSuccess: () => void refetch() },
                           )
                         }
                       >

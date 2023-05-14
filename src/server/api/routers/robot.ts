@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { env } from "@/env.mjs";
 import { Configuration, OpenAIApi } from "openai";
 import { z } from "zod";
-import { serverEnv } from "../../../env/schema.mjs";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 const configuration = new Configuration({
-  apiKey: serverEnv.OPENAI_API_KEY,
+  apiKey: env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
