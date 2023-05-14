@@ -39,7 +39,7 @@
     "react-hook-form": "^7.43.9",
     "react-select": "^5.7.2",
     "sass": "^1.61.0",
-    "superjson": "1.12.2",
+    "superjson": "1.12.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {
