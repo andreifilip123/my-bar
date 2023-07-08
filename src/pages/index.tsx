@@ -5,14 +5,13 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
-import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
 import { api } from "@/utils/api";
 
-const Home: NextPage = () => {
+export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
@@ -71,9 +70,7 @@ const Home: NextPage = () => {
       </main>
     </>
   );
-};
-
-export default Home;
+}
 
 const AuthShowcase: React.FC = () => {
   const { user, isSignedIn } = useUser();

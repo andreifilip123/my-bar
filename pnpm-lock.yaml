@@ -29,29 +29,26 @@ dependencies:
     specifier: ^13.4.1
     version: 13.4.1
   '@prisma/client':
-    specifier: ^4.12.0
+    specifier: ^4.14.0
     version: 4.16.2(prisma@4.16.2)
   '@t3-oss/env-nextjs':
-    specifier: ^0.2.1
-    version: 0.2.1(zod@3.21.4)
+    specifier: ^0.3.1
+    version: 0.3.1(typescript@5.1.6)(zod@3.21.4)
   '@tanstack/react-query':
-    specifier: ^4.28.0
+    specifier: ^4.29.7
     version: 4.29.19(react-dom@18.2.0)(react@18.2.0)
   '@trpc/client':
-    specifier: ^10.19.1
+    specifier: ^10.26.0
     version: 10.34.0(@trpc/server@10.34.0)
   '@trpc/next':
-    specifier: ^10.19.1
+    specifier: ^10.26.0
     version: 10.34.0(@tanstack/react-query@4.29.19)(@trpc/client@10.34.0)(@trpc/react-query@10.34.0)(@trpc/server@10.34.0)(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
   '@trpc/react-query':
-    specifier: ^10.19.1
+    specifier: ^10.26.0
     version: 10.34.0(@tanstack/react-query@4.29.19)(@trpc/client@10.34.0)(@trpc/server@10.34.0)(react-dom@18.2.0)(react@18.2.0)
   '@trpc/server':
-    specifier: ^10.19.1
+    specifier: ^10.26.0
     version: 10.34.0
-  '@types/nodemailer':
-    specifier: ^6.4.7
-    version: 6.4.7
   '@vercel/analytics':
     specifier: ^1.0.1
     version: 1.0.1
@@ -62,7 +59,7 @@ dependencies:
     specifier: ^2.2.3
     version: 2.2.3
   next:
-    specifier: ^13.4.1
+    specifier: ^13.4.2
     version: 13.4.9(react-dom@18.2.0)(react@18.2.0)(sass@1.61.0)
   openai:
     specifier: ^3.2.1
@@ -100,34 +97,34 @@ dependencies:
 
 devDependencies:
   '@types/eslint':
-    specifier: ^8.21.3
+    specifier: ^8.37.0
     version: 8.44.0
   '@types/node':
-    specifier: ^18.15.11
+    specifier: ^18.16.0
     version: 18.16.19
   '@types/prettier':
     specifier: ^2.7.2
     version: 2.7.3
   '@types/react':
-    specifier: ^18.0.33
+    specifier: ^18.2.6
     version: 18.2.14
   '@types/react-dom':
-    specifier: ^18.0.11
+    specifier: ^18.2.4
     version: 18.2.6
   '@typescript-eslint/eslint-plugin':
-    specifier: ^5.57.1
+    specifier: ^5.59.6
     version: 5.61.0(@typescript-eslint/parser@5.61.0)(eslint@8.44.0)(typescript@5.1.6)
   '@typescript-eslint/parser':
-    specifier: ^5.57.1
+    specifier: ^5.59.6
     version: 5.61.0(eslint@8.44.0)(typescript@5.1.6)
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.25)
   eslint:
-    specifier: ^8.37.0
+    specifier: ^8.40.0
     version: 8.44.0
   eslint-config-next:
-    specifier: ^13.4.1
+    specifier: ^13.4.2
     version: 13.4.9(eslint@8.44.0)(typescript@5.1.6)
   eslint-config-prettier:
     specifier: ^8.8.0
@@ -136,19 +133,19 @@ devDependencies:
     specifier: ^8.4.21
     version: 8.4.25
   prettier:
-    specifier: ^2.8.7
+    specifier: ^2.8.8
     version: 2.8.8
   prettier-plugin-tailwindcss:
-    specifier: ^0.2.7
-    version: 0.2.7(prettier@2.8.8)
+    specifier: ^0.2.8
+    version: 0.2.8(prettier@2.8.8)
   prisma:
-    specifier: ^4.12.0
+    specifier: ^4.14.0
     version: 4.16.2
   tailwindcss:
     specifier: ^3.3.1
     version: 3.3.2
   typescript:
-    specifier: ^5.0.3
+    specifier: ^5.0.4
     version: 5.1.6
 
 packages:
@@ -2790,20 +2787,24 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@t3-oss/env-core@0.2.1(zod@3.21.4):
-    resolution: {integrity: sha512-aTf/E+t0i7WsHJelg8LaynUVgIXeQdDViIr3LCL8XiE+qzE8vWoTgfc+VML/lBBgE2cbcG2VCBnk45EUCjIRdQ==}
+  /@t3-oss/env-core@0.3.1(typescript@5.1.6)(zod@3.21.4):
+    resolution: {integrity: sha512-iEnBuWeSjzqQLDTUw7H+YhstV4OZrGXTkQGL6ZOMxZQoCmwGX7GVS+1KCd5RvCzOtrIAD9jeOItSWNjC7sG4Sg==}
     peerDependencies:
+      typescript: '>=4.7.2'
       zod: ^3.0.0
     dependencies:
+      typescript: 5.1.6
       zod: 3.21.4
     dev: false
 
-  /@t3-oss/env-nextjs@0.2.1(zod@3.21.4):
-    resolution: {integrity: sha512-fWyoUHrwMz+CuO6lJ7jaWNj76LHminYzA0quYp1wv+8EKjHOuP/zf2k0FDtjnHBs//6K+kpWxttVW2Uby3SuQA==}
+  /@t3-oss/env-nextjs@0.3.1(typescript@5.1.6)(zod@3.21.4):
+    resolution: {integrity: sha512-W1OgOn5xtpdEGraAQesyLzO2aNLRfSJEyK6qjQFfEUnrPbkvB+WxABX2bPMqfn4KJQ8pziLCSdBFiUN8OagqAg==}
     peerDependencies:
+      typescript: '>=4.7.2'
       zod: ^3.0.0
     dependencies:
-      '@t3-oss/env-core': 0.2.1(zod@3.21.4)
+      '@t3-oss/env-core': 0.3.1(typescript@5.1.6)(zod@3.21.4)
+      typescript: 5.1.6
       zod: 3.21.4
     dev: false
 
@@ -2967,12 +2968,6 @@ packages:
 
   /@types/node@18.16.19:
     resolution: {integrity: sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==}
-
-  /@types/nodemailer@6.4.7:
-    resolution: {integrity: sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==}
-    dependencies:
-      '@types/node': 18.16.19
-    dev: false
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -5504,12 +5499,11 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-tailwindcss@0.2.7(prettier@2.8.8):
-    resolution: {integrity: sha512-jQopIOgjLpX+y8HeD56XZw7onupRTC0cw7eKKUimI7vhjkPF5/1ltW5LyqaPtSyc8HvEpvNZsvvsGFa2qpa59w==}
+  /prettier-plugin-tailwindcss@0.2.8(prettier@2.8.8):
+    resolution: {integrity: sha512-KgPcEnJeIijlMjsA6WwYgRs5rh3/q76oInqtMXBA/EMcamrcYJpyhtRhyX1ayT9hnHlHTuO8sIifHF10WuSDKg==}
     engines: {node: '>=12.17.0'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
-      '@prettier/plugin-php': '*'
       '@prettier/plugin-pug': '*'
       '@shopify/prettier-plugin-liquid': '*'
       '@shufo/prettier-plugin-blade': '*'
@@ -5526,8 +5520,6 @@ packages:
       prettier-plugin-twig-melody: '*'
     peerDependenciesMeta:
       '@ianvs/prettier-plugin-sort-imports':
-        optional: true
-      '@prettier/plugin-php':
         optional: true
       '@prettier/plugin-pug':
         optional: true
@@ -6419,7 +6411,6 @@ packages:
     resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
