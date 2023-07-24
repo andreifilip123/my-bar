@@ -93,8 +93,8 @@ dependencies:
     specifier: ^0.32.1
     version: 0.32.1
   superjson:
-    specifier: 1.12.2
-    version: 1.12.2
+    specifier: 1.13.1
+    version: 1.13.1
   zod:
     specifier: ^3.21.4
     version: 3.21.4
@@ -6192,8 +6192,8 @@ packages:
       ts-interface-checker: 0.1.13
     dev: true
 
-  /superjson@1.12.2:
-    resolution: {integrity: sha512-ugvUo9/WmvWOjstornQhsN/sR9mnGtWGYeTxFuqLb4AiT4QdUavjGFRALCPKWWnAiUJ4HTpytj5e0t5HoMRkXg==}
+  /superjson@1.13.1:
+    resolution: {integrity: sha512-AVH2eknm9DEd3qvxM4Sq+LTCkSXE2ssfh1t11MHMXyYXFQyQ1HLgVvV+guLTsaQnJU3gnaVo34TohHPulY/wLg==}
     engines: {node: '>=10'}
     dependencies:
       copy-anything: 3.0.3
