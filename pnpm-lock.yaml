@@ -72,8 +72,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0
   react-confetti-explosion:
-    specifier: ^2.1.1
-    version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^2.1.2
+    version: 2.1.2(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
@@ -5664,8 +5664,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-confetti-explosion@2.1.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-7ovmOiF2TfUsEJ8iRFOxthsKI4D7fBPhfASlMLbvKKcF+Jz+kQs26/0e+JkHcQPqn1edDtFxPtcqgbNlo1FdlA==}
+  /react-confetti-explosion@2.1.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-4UzDFBajAGXmF9TSJoRMO2QOBCIXc66idTxH8l7Mkul48HLGtk+tMzK9HYDYsy7Zmw5sEGchi2fbn4AJUuLrZw==}
     peerDependencies:
       react: ^18.x
       react-dom: ^18.x
