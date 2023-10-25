@@ -29,7 +29,7 @@
     "@vercel/analytics": "^1.0.1",
     "framer-motion": "^10.11.2",
     "json5": "^2.2.3",
-    "next": "^13.4.2",
+    "next": "^13.5.0",
     "openai": "^3.2.1",
     "react": "18.2.0",
     "react-confetti-explosion": "^2.1.1",
