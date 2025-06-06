@@ -21,8 +21,8 @@ importers:
         specifier: ^2.8.0
         version: 2.8.2(@emotion/react@11.11.1(@types/react@18.2.14)(react@18.3.1))(@emotion/styled@11.11.0(@emotion/react@11.11.1(@types/react@18.2.14)(react@18.3.1))(@types/react@18.2.14)(react@18.3.1))(@types/react@18.2.14)(framer-motion@10.12.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/nextjs':
-        specifier: ^4.21.14
-        version: 4.21.14(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.63.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^4.31.8
+        version: 4.31.8(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.63.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@emotion/react':
         specifier: ^11.11.1
         version: 11.11.1(@types/react@18.2.14)(react@18.3.1)
@@ -150,6 +150,9 @@ importers:
       tailwindcss:
         specifier: ^3.3.2
         version: 3.3.2
+      tar-fs:
+        specifier: '>=2.1.3'
+        version: 3.0.9
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -1016,36 +1019,38 @@ packages:
       '@chakra-ui/system': '>=2.0.0'
       react: '>=18'
 
-  '@clerk/backend@0.24.0':
-    resolution: {integrity: sha512-An1VKCFlFTROUYuELDwY5B6FmbVmIDuW837t0JfgbOLBYo1yoUgXZHB/wttGISaHt+CiOs1+CAI2U3iHxkaxhA==}
+  '@clerk/backend@0.38.15':
+    resolution: {integrity: sha512-zmd0jPyb1iALlmyzyRbgujQXrGqw8sf+VpFjm5GkndpBeq5+9+oH7QgMaFEmWi9oxvTd2sZ+EN+QT4+OXPUnGA==}
     engines: {node: '>=14'}
 
-  '@clerk/clerk-react@4.22.0':
-    resolution: {integrity: sha512-vtGOszKYpDdV3cFtiG24jf1UdFGrXIfIzTyjh3aHd2mXGE2dIm8m04X3+mHBDStJFpJNzim8f+7HMLVeMRJhkA==}
+  '@clerk/clerk-react@4.32.5':
+    resolution: {integrity: sha512-fb4NyJ2bRGxWWlbyVo1geYInzsuaOqTXInFQLPfNDFaF+Ztpl9FZyfvT5V+Ka5YoUJzbEq/v/Y5zGvFIJS0F9w==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16'
 
-  '@clerk/clerk-sdk-node@4.10.15':
-    resolution: {integrity: sha512-fif8iwedLDFgllPLx8xwxA66ICbp7KjsSULqb8mcKXHPnZ/xL17eZSx4puHg4CEGBmOxY6IL5nbRj1+s+TfgqQ==}
+  '@clerk/clerk-sdk-node@4.13.23':
+    resolution: {integrity: sha512-D3/O5zLqOtIcoNjA5tza1WK+o3Bs20DcmFc2z8swv7p8p5i5fj5Q1rEZl31bnz+fEQGo2YtTYZyG0zY/HkioQw==}
     engines: {node: '>=14'}
 
-  '@clerk/nextjs@4.21.14':
-    resolution: {integrity: sha512-r+s9EKG0CPPj31p6UZmxPQ2A3+JVE70PmBYiC/pRrF3Oo57pYJGVmBB+eUWVYaYJNcJxhYoYb/QLsL8Xl0dUVQ==}
+  '@clerk/nextjs@4.31.8':
+    resolution: {integrity: sha512-AKJEtFJVVCFIFqd+fPRmNn5ckXIoM9VhskSHC89Szz1PfyL75W/cWfZCVdq7czW09df3BbsOXVZJLPRwlxMueQ==}
     engines: {node: '>=14'}
-    deprecated: A critical security vulnerability that affects versions in the range of >= 4.7.0,< 4.29.3 has been discovered by the Clerk team. Please upgrade immediately to 4.29.3. For more information, refer to https://clerk.com/changelog/2024-01-12
     peerDependencies:
-      next: '>=10'
+      next: ^10 || ^13.5.7 || ^14.2.25 || ^15.2.3
       react: ^17.0.2 || ^18.0.0-0
       react-dom: ^17.0.2 || ^18.0.0-0
 
-  '@clerk/shared@0.19.1':
-    resolution: {integrity: sha512-5RwASoff6CPgHcrM3kuvgUwp9qQa02zkjUdV8lNzQYEhojz6dfahLv3xZW3MS1UqDOIGrbrPviqi9pBmjpNKPA==}
+  '@clerk/shared@1.4.2':
+    resolution: {integrity: sha512-R+OkzCtnNU7sn/F6dBfdY5lKs84TN785VZdBBefmyr7zsXcFEqbCcfQzyvgtIS28Ln5SifFEBoAyYR334IXO8w==}
     peerDependencies:
       react: '>=16'
+    peerDependenciesMeta:
+      react:
+        optional: true
 
-  '@clerk/types@3.46.1':
-    resolution: {integrity: sha512-IA/iSXJJZym4Z6f9OcT9OJayK2opVhxUVJky15aY4iVsJCPScgApBuuzC7N4vfXwA6RI/wGebFbvmsEQ3oI/UA==}
+  '@clerk/types@3.65.5':
+    resolution: {integrity: sha512-RGO8v2a52Ybo1jwVj42UWT8VKyxAk/qOxrkA3VNIYBNEajPSmZNa9r9MTgqSgZRyz1XTlQHdVb7UK7q78yAGfA==}
     engines: {node: '>=14'}
 
   '@emotion/babel-plugin@11.11.0':
@@ -1638,12 +1643,45 @@ packages:
   axobject-query@3.1.1:
     resolution: {integrity: sha512-goKlv8DZrK9hUh975fnHzhNIO4jUnFCfv/dszV5VwUGDFjI6vQ2VwoyjYjYNEbBE8AH87TduWP5uyDR1D+Iteg==}
 
+  b4a@1.6.7:
+    resolution: {integrity: sha512-OnAYlL5b7LEkALw87fUVafQw5rVR9RjwGd4KUwNQ6DrrNmaVaUCgLipfVlzrPQ4tWOR9P0IXGNOx50jYCCdSJg==}
+
   babel-plugin-macros@3.1.0:
     resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
     engines: {node: '>=10', npm: '>=6'}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  bare-events@2.5.4:
+    resolution: {integrity: sha512-+gFfDkR8pj4/TrWCGUGWmJIkBwuxPS5F+a5yWjOHQt2hHvNZd5YLzadjmDUtFmMM4y429bnKLa8bYBMHcYdnQA==}
+
+  bare-fs@4.1.5:
+    resolution: {integrity: sha512-1zccWBMypln0jEE05LzZt+V/8y8AQsQQqxtklqaIyg5nu6OAYFhZxPXinJTSG+kU5qyNmeLgcn9AW7eHiCHVLA==}
+    engines: {bare: '>=1.16.0'}
+    peerDependencies:
+      bare-buffer: '*'
+    peerDependenciesMeta:
+      bare-buffer:
+        optional: true
+
+  bare-os@3.6.1:
+    resolution: {integrity: sha512-uaIjxokhFidJP+bmmvKSgiMzj2sV5GPHaZVAIktcxcpCyBFFWO+YlikVAdhmUo2vYFvFhOXIAlldqV29L8126g==}
+    engines: {bare: '>=1.14.0'}
+
+  bare-path@3.0.0:
+    resolution: {integrity: sha512-tyfW2cQcB5NN8Saijrhqn0Zh7AnFNsnczRcuWODH0eYAXBsJ5gVxAUuNr7tsHSC6IZ77cA0SitzT+s47kot8Mw==}
+
+  bare-stream@2.6.5:
+    resolution: {integrity: sha512-jSmxKJNJmHySi6hC42zlZnq00rga4jjxcgNZjY9N5WlOe/iOoGRtdwGsHzQv2RlH2KOYMwGUXhf2zXd32BA9RA==}
+    peerDependencies:
+      bare-buffer: '*'
+      bare-events: '*'
+    peerDependenciesMeta:
+      bare-buffer:
+        optional: true
+      bare-events:
+        optional: true
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
@@ -2106,6 +2144,9 @@ packages:
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+
+  fast-fifo@1.3.2:
+    resolution: {integrity: sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==}
 
   fast-glob@3.2.12:
     resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
@@ -2853,9 +2894,6 @@ packages:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
 
-  path-to-regexp@6.2.1:
-    resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
-
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
@@ -3288,6 +3326,9 @@ packages:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
 
+  streamx@2.22.1:
+    resolution: {integrity: sha512-znKXEBxfatz2GBNK02kRnCXjV+AA4kjZIUxeWSr3UGirZMJfTE9uiwKHobnbgxWyL/JWro8tTq+vOqAK1/qbSA==}
+
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
     engines: {node: '>=8'}
@@ -3377,8 +3418,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  swr@1.3.0:
-    resolution: {integrity: sha512-dkghQrOl2ORX9HYrMDtPa7LTVHJjCTeZoB1dqTbnnEDlSvN8JEKpYIYurDfvbQFUUS8Cg8PceFVZNkW0KNNYPw==}
+  swr@2.2.0:
+    resolution: {integrity: sha512-AjqHOv2lAhkuUdIiBu9xbuettzAzWXmCEcLONNKJRba87WAefz8Ca9d6ds/SzrPc235n1IxWYdhJ2zF3MNUaoQ==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
 
@@ -3395,12 +3436,21 @@ packages:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
 
-  tar-fs@2.1.1:
-    resolution: {integrity: sha512-V0r2Y9scmbDRLCNex/+hYzvp/zyYjvFbHPNgVTKfQvVrb6guiE/fxP+XblDNR011utopbkex2nM4dHNV6GDsng==}
+  tar-fs@2.1.3:
+    resolution: {integrity: sha512-090nwYJDmlhwFwEW3QQl+vaNnxsO2yVsd45eTKRBzSzu+hlb1w2K9inVq5b0ngXuLVqQ4ApvsUHHnu/zQNkWAg==}
+
+  tar-fs@3.0.9:
+    resolution: {integrity: sha512-XF4w9Xp+ZQgifKakjZYmFdkLoSWd34VGKcsTCwlNWM7QG3ZbaxnTsaBwnjFZqHRf/rROxaR8rXnbtwdvaDI+lA==}
 
   tar-stream@2.2.0:
     resolution: {integrity: sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ==}
     engines: {node: '>=6'}
+
+  tar-stream@3.1.7:
+    resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
+
+  text-decoder@1.2.3:
+    resolution: {integrity: sha512-3/o9z3X0X0fTupwsYvR03pJ/DjWuqqrfwBgTQzdWDiQSm9KitAyz/9WqsT2JQW7KV2m+bC2ol/zqpW37NHxLaA==}
 
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
@@ -5100,56 +5150,62 @@ snapshots:
       '@chakra-ui/system': 2.6.2(@emotion/react@11.11.1(@types/react@18.2.14)(react@18.3.1))(@emotion/styled@11.11.0(@emotion/react@11.11.1(@types/react@18.2.14)(react@18.3.1))(@types/react@18.2.14)(react@18.3.1))(react@18.3.1)
       react: 18.3.1
 
-  '@clerk/backend@0.24.0':
+  '@clerk/backend@0.38.15(react@18.3.1)':
     dependencies:
-      '@clerk/types': 3.46.1
+      '@clerk/shared': 1.4.2(react@18.3.1)
+      '@clerk/types': 3.65.5
       '@peculiar/webcrypto': 1.4.1
       '@types/node': 16.18.6
+      cookie: 0.5.0
       deepmerge: 4.2.2
       node-fetch-native: 1.0.1
       snakecase-keys: 5.4.4
       tslib: 2.4.1
+    transitivePeerDependencies:
+      - react
 
-  '@clerk/clerk-react@4.22.0(react@18.3.1)':
+  '@clerk/clerk-react@4.32.5(react@18.3.1)':
     dependencies:
-      '@clerk/shared': 0.19.1(react@18.3.1)
-      '@clerk/types': 3.46.1
+      '@clerk/shared': 1.4.2(react@18.3.1)
+      '@clerk/types': 3.65.5
       react: 18.3.1
-      swr: 1.3.0(react@18.3.1)
       tslib: 2.4.1
 
-  '@clerk/clerk-sdk-node@4.10.15':
+  '@clerk/clerk-sdk-node@4.13.23(react@18.3.1)':
     dependencies:
-      '@clerk/backend': 0.24.0
-      '@clerk/types': 3.46.1
+      '@clerk/backend': 0.38.15(react@18.3.1)
+      '@clerk/shared': 1.4.2(react@18.3.1)
+      '@clerk/types': 3.65.5
       '@types/cookies': 0.7.7
       '@types/express': 4.17.14
       '@types/node-fetch': 2.6.2
       camelcase-keys: 6.2.2
-      cookie: 0.5.0
       snakecase-keys: 3.2.1
       tslib: 2.4.1
+    transitivePeerDependencies:
+      - react
 
-  '@clerk/nextjs@4.21.14(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.63.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@clerk/nextjs@4.31.8(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.63.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@clerk/backend': 0.24.0
-      '@clerk/clerk-react': 4.22.0(react@18.3.1)
-      '@clerk/clerk-sdk-node': 4.10.15
-      '@clerk/types': 3.46.1
+      '@clerk/backend': 0.38.15(react@18.3.1)
+      '@clerk/clerk-react': 4.32.5(react@18.3.1)
+      '@clerk/clerk-sdk-node': 4.13.23(react@18.3.1)
+      '@clerk/shared': 1.4.2(react@18.3.1)
+      '@clerk/types': 3.65.5
       next: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.63.6)
-      path-to-regexp: 6.2.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.4.1
 
-  '@clerk/shared@0.19.1(react@18.3.1)':
+  '@clerk/shared@1.4.2(react@18.3.1)':
     dependencies:
       glob-to-regexp: 0.4.1
       js-cookie: 3.0.1
+      swr: 2.2.0(react@18.3.1)
+    optionalDependencies:
       react: 18.3.1
-      swr: 1.3.0(react@18.3.1)
 
-  '@clerk/types@3.46.1':
+  '@clerk/types@3.65.5':
     dependencies:
       csstype: 3.1.1
 
@@ -5373,18 +5429,18 @@ snapshots:
     dependencies:
       asn1js: 3.0.5
       pvtsutils: 1.3.2
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   '@peculiar/json-schema@1.1.12':
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   '@peculiar/webcrypto@1.4.1':
     dependencies:
       '@peculiar/asn1-schema': 2.3.6
       '@peculiar/json-schema': 1.1.12
       pvtsutils: 1.3.2
-      tslib: 2.5.0
+      tslib: 2.6.3
       webcrypto-core: 1.7.7
 
   '@pkgjs/parseargs@0.11.0':
@@ -5773,7 +5829,7 @@ snapshots:
     dependencies:
       pvtsutils: 1.3.2
       pvutils: 1.1.3
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   ast-types-flow@0.0.8: {}
 
@@ -5807,6 +5863,8 @@ snapshots:
     dependencies:
       deep-equal: 2.2.3
 
+  b4a@1.6.7: {}
+
   babel-plugin-macros@3.1.0:
     dependencies:
       '@babel/runtime': 7.21.0
@@ -5814,6 +5872,31 @@ snapshots:
       resolve: 1.22.2
 
   balanced-match@1.0.2: {}
+
+  bare-events@2.5.4:
+    optional: true
+
+  bare-fs@4.1.5:
+    dependencies:
+      bare-events: 2.5.4
+      bare-path: 3.0.0
+      bare-stream: 2.6.5(bare-events@2.5.4)
+    optional: true
+
+  bare-os@3.6.1:
+    optional: true
+
+  bare-path@3.0.0:
+    dependencies:
+      bare-os: 3.6.1
+    optional: true
+
+  bare-stream@2.6.5(bare-events@2.5.4):
+    dependencies:
+      streamx: 2.22.1
+    optionalDependencies:
+      bare-events: 2.5.4
+    optional: true
 
   base64-js@1.5.1: {}
 
@@ -6099,7 +6182,7 @@ snapshots:
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   duplexer@0.1.2: {}
 
@@ -6269,7 +6352,7 @@ snapshots:
       debug: 4.3.5
       enhanced-resolve: 5.17.0
       eslint: 8.44.0
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.44.0))(eslint@8.44.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.44.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-typescript@3.6.1)(eslint@8.44.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
@@ -6281,7 +6364,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.44.0))(eslint@8.44.0):
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.44.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -6302,7 +6385,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.44.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.44.0))(eslint@8.44.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.61.0(eslint@8.44.0)(typescript@5.1.6))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.44.0)
       hasown: 2.0.2
       is-core-module: 2.14.0
       is-glob: 4.0.3
@@ -6444,6 +6527,8 @@ snapshots:
   expand-template@2.0.3: {}
 
   fast-deep-equal@3.1.3: {}
+
+  fast-fifo@1.3.2: {}
 
   fast-glob@3.2.12:
     dependencies:
@@ -7001,7 +7086,7 @@ snapshots:
 
   lower-case@2.0.2:
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   lru-cache@10.4.3: {}
 
@@ -7100,7 +7185,7 @@ snapshots:
   no-case@3.0.4:
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   node-abi@3.45.0:
     dependencies:
@@ -7221,8 +7306,6 @@ snapshots:
       lru-cache: 10.4.3
       minipass: 7.1.2
 
-  path-to-regexp@6.2.1: {}
-
   path-type@4.0.0: {}
 
   picocolors@1.0.0: {}
@@ -7292,7 +7375,7 @@ snapshots:
       pump: 3.0.0
       rc: 1.2.8
       simple-get: 4.0.1
-      tar-fs: 2.1.1
+      tar-fs: 2.1.3
       tunnel-agent: 0.6.0
 
   prelude-ls@1.2.1: {}
@@ -7322,7 +7405,7 @@ snapshots:
 
   pvtsutils@1.3.2:
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   pvutils@1.1.3: {}
 
@@ -7582,7 +7665,7 @@ snapshots:
       prebuild-install: 7.1.1
       semver: 7.5.3
       simple-get: 4.0.1
-      tar-fs: 2.1.1
+      tar-fs: 2.1.3
       tunnel-agent: 0.6.0
 
   shebang-command@2.0.0:
@@ -7623,7 +7706,7 @@ snapshots:
   snake-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   snakecase-keys@3.2.1:
     dependencies:
@@ -7647,6 +7730,13 @@ snapshots:
       internal-slot: 1.0.7
 
   streamsearch@1.1.0: {}
+
+  streamx@2.22.1:
+    dependencies:
+      fast-fifo: 1.3.2
+      text-decoder: 1.2.3
+    optionalDependencies:
+      bare-events: 2.5.4
 
   string-width@4.2.3:
     dependencies:
@@ -7750,9 +7840,10 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  swr@1.3.0(react@18.3.1):
+  swr@2.2.0(react@18.3.1):
     dependencies:
       react: 18.3.1
+      use-sync-external-store: 1.2.0(react@18.3.1)
 
   symbol-observable@1.2.0: {}
 
@@ -7786,12 +7877,22 @@ snapshots:
 
   tapable@2.2.1: {}
 
-  tar-fs@2.1.1:
+  tar-fs@2.1.3:
     dependencies:
       chownr: 1.1.4
       mkdirp-classic: 0.5.3
       pump: 3.0.0
       tar-stream: 2.2.0
+
+  tar-fs@3.0.9:
+    dependencies:
+      pump: 3.0.0
+      tar-stream: 3.1.7
+    optionalDependencies:
+      bare-fs: 4.1.5
+      bare-path: 3.0.0
+    transitivePeerDependencies:
+      - bare-buffer
 
   tar-stream@2.2.0:
     dependencies:
@@ -7800,6 +7901,16 @@ snapshots:
       fs-constants: 1.0.0
       inherits: 2.0.4
       readable-stream: 3.6.2
+
+  tar-stream@3.1.7:
+    dependencies:
+      b4a: 1.6.7
+      fast-fifo: 1.3.2
+      streamx: 2.22.1
+
+  text-decoder@1.2.3:
+    dependencies:
+      b4a: 1.6.7
 
   text-table@0.2.0: {}
 
@@ -7967,7 +8078,7 @@ snapshots:
       '@peculiar/json-schema': 1.1.12
       asn1js: 3.0.5
       pvtsutils: 1.3.2
-      tslib: 2.5.0
+      tslib: 2.6.3
 
   webpack-bundle-analyzer@4.7.0:
     dependencies:
